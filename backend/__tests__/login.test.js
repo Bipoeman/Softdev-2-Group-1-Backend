@@ -1,4 +1,4 @@
-const { loginController } = require("../controllers/login");
+import { loginController } from "../controllers/login";
 
 const res = {
     status: jest.fn(x => x),
