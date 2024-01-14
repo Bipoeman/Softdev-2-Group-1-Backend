@@ -18,11 +18,12 @@ app.use((req, res, next) => {
     if (!PUBLIC_PATH.includes(req.path)) {
         console.log("Header: ", req.headers.authorization);
         const result = verifyToken(req.headers.authorization);
-        // Can't deploy with this because ???
-        // if (result === true) {
-        //     next();
-        // }
-        next();
+        if (result === true) {
+            next();
+        }
+        else {
+            res.status(401).end();
+        }
     } else {
         next();
     }
