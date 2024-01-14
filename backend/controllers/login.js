@@ -8,7 +8,6 @@ export const loginController = (req, res) => {
         res.send("login success");
     }
     else {
-        res.status(401);
-        res.send("login fail");
+        res.status(401).send("login fail");
     }
 }

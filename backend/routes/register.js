@@ -1,5 +1,5 @@
 import express from "express";
-import { register } from "../controllers/register.js";
+import { registerController } from "../controllers/register.js";
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ router.get("", (req, res) => {
 })
 
 
-router.post("",register);
+router.post("", registerController);
 
 export default router;

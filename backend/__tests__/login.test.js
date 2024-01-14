@@ -1,8 +1,8 @@
 import { loginController } from "../controllers/login";
 
 const res = {
-    status: jest.fn(x => x),
-    send: jest.fn(x => x),
+    status: jest.fn().mockReturnThis(),
+    send: jest.fn().mockReturnThis(),
 };
 
 it('should return login success', () => {

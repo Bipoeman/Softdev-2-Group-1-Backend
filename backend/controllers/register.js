@@ -1,4 +1,4 @@
-export const register = (req, res) => {
+export const registerController = (req, res) => {
 
     const username = req.body.username;
     const password = req.body.password;
@@ -7,7 +7,7 @@ export const register = (req, res) => {
         res.send("register success");
     }
     else {
-        res.send("register fail");
+        res.status(401).send("register fail");
     }
 }
 
