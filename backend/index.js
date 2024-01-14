@@ -11,11 +11,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-let PUBLIC_PATH = ["/login", "/register"];
+let PUBLIC_PATH = ["/login", "/register", "/"];
 
 
 app.use((req, res, next) => {
-    if (!(PUBLIC_PATH.includes(req.path))) {
+    if (!PUBLIC_PATH.includes(req.path)) {
         console.log("Header: ", req.headers.authorization);
         const result = verifyToken(req.headers.authorization);
         if (result === true) {
