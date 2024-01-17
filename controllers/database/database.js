@@ -1,6 +1,5 @@
 import mysql from 'mysql';
 import fs from 'fs';
-import path from "path";
 
 const filepath = fs.readFileSync("./controllers/database/cert.pem");
 const conn = mysql.createConnection({
