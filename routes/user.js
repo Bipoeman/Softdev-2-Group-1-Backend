@@ -4,7 +4,7 @@ import conn from "../controllers/database/database.js";
 const router = express.Router();
 
 router.get("", (req, res) => {
-    conn.query("SELECT * FROM user", (err, result) => {
+    conn.query("SELECT * FROM user_info", (err, result) => {
         if (err) {
             res.status(500).send(err);
         }
@@ -12,4 +12,6 @@ router.get("", (req, res) => {
             res.send(result);
         }
     })
-}
+})
+
+export default router;

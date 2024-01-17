@@ -1,6 +1,7 @@
 import express from 'express';
 import login from './routes/login.js';
 import register from './routes/register.js';
+import user from './routes/user.js';
 import { verifyToken } from "./controllers/token/token.js";
 import { config } from 'dotenv';
 
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-let PUBLIC_PATH = ["/login", "/register", "/"];
+let PUBLIC_PATH = ["/user","/login", "/register", "/"];
 
 
 app.use((req, res, next) => {
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 
 app.use("/login", login);
 app.use("/register", register);
+app.use("/user",user)
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
