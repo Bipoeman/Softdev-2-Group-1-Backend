@@ -1,9 +1,19 @@
 import { loginController } from "../controllers/login";
+import { signToken } from "../controllers/token/token";
 
 const res = {
     status: jest.fn().mockReturnThis(),
     send: jest.fn().mockReturnThis(),
 };
+
+jest.mock("../controllers/token/token", () => {
+    const originalModule = jest.requireActual("../controllers/token/token");
+
+    return {
+        ...originalModule,
+        signToken: (id, name) => "signedToken"
+    };
+});
 
 it('should return login success', () => {
     const req = {
@@ -15,7 +25,7 @@ it('should return login success', () => {
 
     loginController(req, res);
 
-    expect(res.send).toHaveBeenCalledWith('login success');
+    expect(res.send).toHaveBeenCalledWith(signToken(2, "admin"));
 });
 
 it('should return login fail', () => {
