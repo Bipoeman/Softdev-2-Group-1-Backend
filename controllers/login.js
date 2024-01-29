@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import conn from "./database/database.js";
 dotenv.config()
 
-const salt = process.env.salt;
 
 
 export const loginController = (req, res) => {
