@@ -2,7 +2,7 @@ import express from 'express';
 import login from './routes/login.js';
 import register from './routes/register.js';
 import user from './routes/user.js';
-import pinthebin from "/routes/pinthebin.js"
+import PinTheBin from "./routes/pinthebin.js"
 import { verifyToken } from "./controllers/token/token.js";
 import { config } from 'dotenv';
 
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 app.use("/login", login);
 app.use("/register", register);
 app.use("/user",user);
-app.use("/pinthebin",pinthebin);
+app.use("/pinthebin",PinTheBin);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
