@@ -4,7 +4,7 @@ import { config } from 'dotenv';
 config();
 const secretKey = process.env.secretKey
 
-export const verifyToken = (rawtoken) => {
+export const verifyToken = (rawToken) => {
     if (!rawtoken) {
         // Handle the missing token scenario, e.g., return false or throw an error
         return false;
