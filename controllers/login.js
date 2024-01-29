@@ -7,9 +7,9 @@ dotenv.config()
 
 
 export const loginController = (req, res) => {
-    const {email,password} = req.body;
-    const command = "select * from user_info where email = ?";
-    conn.query(command,[email],async (err, result) => {
+    const {email,username,password} = req.body;
+    const command = "select * from user_info where email = ? or username = ?";
+    conn.query(command,[email,username],async (err, result) => {
         if (err) throw err;
         else if (result.length !== 1) {
             return res.status(404).json({error: true, message: 'Email or password is incorrect'});
