@@ -34,7 +34,7 @@ jobs:
         tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/softdev2-backend:test
 
     - name: Unit Test
-      run: docker run --rm ${{ secrets.REGISTRY_LOGIN_SERVER }}/softdev2-backend:test npm test
+      run: docker run --rm -e host=${{ secrets.HOST }} -e user=${{ secrets.USER }} -e password=${{ secrets.PASSWORD }} -e database=${{ secrets.DATABASE }} -e secretKey=${{ secrets.SECRETKEY }} -e salt=${{ secrets.SALT }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/softdev2-backend:test npm test
 
     - name: Build and push
       uses: docker/build-push-action@v5
