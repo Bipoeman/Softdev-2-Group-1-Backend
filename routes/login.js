@@ -9,7 +9,7 @@ router.get("", (req, res) => {
 
 
 router.get("/text",(req, res)=>{
-    res.send("sdjhufhs")
+    res.send("test login with token")
 })
 
 
