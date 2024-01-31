@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import login from './routes/login.js';
 import register from './routes/register.js';
 import user from './routes/user.js';
@@ -13,7 +14,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-let PUBLIC_PATH = ["/user","/login", "/register", "/"];
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+})
+const upload = multer({storage});
+
+
+
+let PUBLIC_PATH = ["/user","/login", "/register", "/", "/test"];
 
 
 app.use((req, res, next) => {
@@ -39,6 +52,22 @@ app.use("/pinthebin",PinTheBin);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
+});
+
+
+app.post("/test",upload.single('file'), (req, res) => {
+    const file = req.file;
+    const  {ddd,aaa} = req.body;
+    console.log(ddd,aaa);
+    res.send(file);
+
+
+
+
+    // send picture
+    // res.contentType(file.mimetype);
+    // // Send the file buffer as the response
+    // res.send(file.buffer);
 });
 
 app.listen(port, () => {
