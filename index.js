@@ -5,6 +5,9 @@ import register from './routes/register.js';
 import PinTheBin from "./routes/pinthebin.js"
 import { verifyToken } from "./controllers/token/token.js";
 import { config } from 'dotenv';
+import market from "./routes/market.js";
+import restroom from "./routes/restroom.js";
+import dekhor from './routes/dekhor.js';
 
 config();
 const app = express();
@@ -48,6 +51,9 @@ app.use("/uploads", express.static('uploads'));
 app.use("/login", login);
 app.use("/register", register);
 app.use("/pinthebin",PinTheBin);
+app.use("/market",market);
+app.use("/restroom",restroom);
+app.use("/dekhor",dekhor)
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
