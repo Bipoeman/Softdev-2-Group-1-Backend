@@ -28,7 +28,7 @@ const upload = multer({storage});
 
 
 
-let PUBLIC_PATH = ["/user","/login", "/register", "/", "/test"];
+let PUBLIC_PATH = ["/user","/login", "/register", "/", "/test","/pinthebin/upload"];
 
 
 app.use((req, res, next) => {
