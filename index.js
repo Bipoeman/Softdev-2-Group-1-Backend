@@ -54,16 +54,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.post("/test",upload.single('file'), (req, res) => {
-    const file = req.file;
-    const  {ddd,aaa} = req.body;
-    console.log(ddd,aaa);
-    res.send(file);
-    // send picture
-    // res.contentType(file.mimetype);
-    // // Send the file buffer as the response
-    // res.send(file.buffer);
-});
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
