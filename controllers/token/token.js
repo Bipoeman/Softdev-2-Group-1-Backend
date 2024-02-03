@@ -5,14 +5,13 @@ config();
 const secretKey = process.env.secretKey
 
 export const verifyToken = (rawToken) => {
-    if (!rawtoken) {
+    if (!rawToken) {
         // Handle the missing token scenario, e.g., return false or throw an error
         return false;
     }
     let authorized = false;
-
     // Extract the token without the "Bearer" prefix
-    const token = rawtoken.split(" ")[1];
+    const token = rawToken.split(" ")[1];
     console.log(token)
 
     jwt.verify(token, secretKey, (err, decoded) => {

@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static('uploads'));
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -34,6 +34,7 @@ app.use((req, res, next) => {
         console.log("Header: ", req.headers.authorization);
         const result = verifyToken(req.headers.authorization);
         if (result === true) {
+            console.log("Token is valid");
             next();
         }
         else {
@@ -44,7 +45,7 @@ app.use((req, res, next) => {
     }
 });
 
-
+app.use("/uploads", express.static('uploads'));
 app.use("/login", login);
 app.use("/register", register);
 app.use("/user",user);
