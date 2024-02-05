@@ -7,9 +7,10 @@ import { config } from 'dotenv';
 import market from "./routes/market.js";
 import restroom from "./routes/restroom.js";
 import dekhor from './routes/dekhor.js';
-
+import cors from 'cors';
 config();
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
