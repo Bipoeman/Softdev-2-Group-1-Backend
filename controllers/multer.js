@@ -1,6 +1,15 @@
 import multer from "multer";
 
-const storage = multer.diskStorage({
+const storage1 = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/profile/' );
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+})
+
+const storage2 = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/pinthebin/' );
     },
@@ -8,6 +17,7 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 })
-const uploadpinthebin = multer({storage});
 
-export default uploadpinthebin;
+
+export const uploadprofile = multer({storage: storage1});
+export const uploadpinthebin = multer({storage: storage2});

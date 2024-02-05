@@ -8,6 +8,7 @@ import market from "./routes/market.js";
 import restroom from "./routes/restroom.js";
 import dekhor from './routes/dekhor.js';
 import cors from 'cors';
+import user from "./routes/user.js";
 config();
 const app = express();
 app.use(cors());
@@ -17,11 +18,11 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-let PUBLIC_PATH = ["/user","/login", "/register", "/", "/test","/pinthebin/upload"];
+let authorized_path = ["/user/upload"];
 
 
 app.use((req, res, next) => {
-    if (!PUBLIC_PATH.includes(req.path)) {
+    if (authorized_path.includes(req.path)) {
         console.log("Header: ", req.headers.authorization);
         const result = verifyToken(req.headers.authorization);
         if (result === true) {
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 app.use("/uploads", express.static('uploads'));
 app.use("/login", login);
 app.use("/register", register);
+app.use("/user", user);
 app.use("/pinthebin",PinTheBin);
 app.use("/market",market);
 app.use("/restroom",restroom);
