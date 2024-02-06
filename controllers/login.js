@@ -17,7 +17,7 @@ export const loginController = (req, res) => {
             if (!passwordValid) {
                 return res.status(401).json({error: true, message: 'Email or password is incorrect'});
             }
-            res.status(200).send(signToken(user.id, user.username))
+            res.status(200).send(signToken(user.id, user.email))
 
         }
     })
