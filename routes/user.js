@@ -1,6 +1,7 @@
 import express, { response } from "express";
 import supabase from "../controllers/database/database.js";
 import { uploadprofile } from "../controllers/multer.js";
+import { decodeToken } from "../controllers/token/token.js";
 
 
 const router = express.Router();
@@ -31,19 +32,24 @@ router.get("/:id", async (req, res) => {
 
 router.post("/upload",uploadprofile.single("file"),async (req, res) => {
     const file = req.file;
-    const {id} = req.body;
+    const id = decodeToken(req.headers.authorization).userId;
     const newminetype = "image/jpeg";
     const newfilename = `profile_${id}.jpeg`
     if (file.size > 1048576) { // 1 MB limit
         response.status(400).send("File size too large");
       }
     else{
-        const {data, err} = await supabase.storage.from("profile").upload(newfilename, file.buffer,{
+        const {data: datapicture, err} = await supabase.storage.from("profile").upload(newfilename, file.buffer,{
             contentType: newminetype
         });
         if (err) throw err;
         else{
-            res.send(data);
+            const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
+            const {data, err} = await supabase.from("user_info").update({profile: url}).eq("id", id).select();
+            if(err) throw err;
+            else{
+                res.send(data);
+            }
         }
     }
 });

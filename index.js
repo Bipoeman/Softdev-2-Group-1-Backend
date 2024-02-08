@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-let authorized_path = [];
+let authorized_path = ["/user/upload"];
 
 
 app.use((req, res, next) => {

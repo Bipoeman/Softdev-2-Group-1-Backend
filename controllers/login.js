@@ -18,8 +18,7 @@ export const loginController = async (req, res) => {
             const user = data[0];
             const validPassword = await bcrypt.compare(password, user.password);
             if (validPassword) {
-                const token = signToken(user.id, user.email);
-                res.status(200).json({ token: token });
+                res.status(200).send(signToken(user.id, user.email));
             }
             else {
                 res.status(400).json({ error: true, message: "invalid password" });
