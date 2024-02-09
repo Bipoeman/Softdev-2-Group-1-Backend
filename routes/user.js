@@ -35,10 +35,8 @@ router.post("/upload",uploadprofile.single("file"),async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
     const newminetype = "image/jpeg";
     const newfilename = `profile_${id}.jpeg`
-    if (file.size > 1048576) { // 1 MB limit
-        response.status(400).send("File size too large");
-      }
-    else{
+    const {data,err} = await supabase.from("user_info").select("profile").eq("id",id);
+    if(data[0].profile === null){
         const {data: datapicture, err} = await supabase.storage.from("profile").upload(newfilename, file.buffer,{
             contentType: newminetype
         });
@@ -51,6 +49,9 @@ router.post("/upload",uploadprofile.single("file"),async (req, res) => {
                 res.send(data);
             }
         }
+    }
+    else{
+        //update picture
     }
 });
 
