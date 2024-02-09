@@ -51,8 +51,12 @@ router.post("/upload",uploadprofile.single("file"),async (req, res) => {
         }
     }
     else{
-        //update picture
-    }
+        const {data, err} = await supabase.storage.from("profile").update(newfilename, file.buffer,{
+            contentType: newminetype
+        });
+        if (err) throw err;
+        else {res.send(data)}
+    }   
 });
 
 export default router;
