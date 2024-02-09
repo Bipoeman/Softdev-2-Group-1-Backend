@@ -1,9 +1,10 @@
-import express, { response } from "express";
+import express from "express";
 import supabase from "../controllers/database/database.js";
-import { uploadprofile } from "../controllers/multer.js";
 import { decodeToken } from "../controllers/token/token.js";
+import { uploadprofilecontroller } from "../controllers/uploadprofile.js";
+import multer from "multer";
 
-
+const uploadprofile = multer();
 const router = express.Router();
 
 // all that is path  url/user
@@ -16,8 +17,8 @@ router.get("", async (req, res) => {
 });
 
 
-router.get("/:id", async (req, res) => {
-    const {id} = req.params;
+router.get("/id", async (req, res) => {
+    const id = decodeToken(req.headers.authorization).userId;
     const {data, err} = await supabase.from("user_info").select("*").eq("id", id);
     if (err) throw err;
     else{
@@ -30,33 +31,6 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-router.post("/upload",uploadprofile.single("file"),async (req, res) => {
-    const file = req.file;
-    const id = decodeToken(req.headers.authorization).userId;
-    const newminetype = "image/jpeg";
-    const newfilename = `profile_${id}.jpeg`
-    const {data,err} = await supabase.from("user_info").select("profile").eq("id",id);
-    if(data[0].profile === null){
-        const {data: datapicture, err} = await supabase.storage.from("profile").upload(newfilename, file.buffer,{
-            contentType: newminetype
-        });
-        if (err) throw err;
-        else{
-            const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
-            const {data, err} = await supabase.from("user_info").update({profile: url}).eq("id", id).select();
-            if(err) throw err;
-            else{
-                res.send(data);
-            }
-        }
-    }
-    else{
-        const {data, err} = await supabase.storage.from("profile").update(newfilename, file.buffer,{
-            contentType: newminetype
-        });
-        if (err) throw err;
-        else {res.send(data)}
-    }   
-});
+router.post("/upload",uploadprofile.single("file"),uploadprofilecontroller);
 
 export default router;
