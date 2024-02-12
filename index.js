@@ -9,6 +9,7 @@ import restroom from "./routes/restroom.js";
 import dekhor from './routes/dekhor.js';
 import cors from 'cors';
 import user from "./routes/user.js";
+import support from "./routes/support.js";
 config();
 const app = express();
 app.use(cors());
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-let authorized_path = ["/user/upload"];
+let authorized_path = ["/user/upload","/support"];
 
 
 app.use((req, res, next) => {
@@ -37,7 +38,6 @@ app.use((req, res, next) => {
     }
 });
 
-app.use("/uploads", express.static('uploads'));
 app.use("/login", login);
 app.use("/register", register);
 app.use("/user", user);
@@ -45,6 +45,7 @@ app.use("/pinthebin",PinTheBin);
 app.use("/market",market);
 app.use("/restroom",restroom);
 app.use("/dekhor",dekhor)
+app.use("/support",support)
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

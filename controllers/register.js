@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 
 export const registerController = async (req, res) => {
     const {email, fullname, username, password} = req.body;
-
     const {data, err} = await supabase.from("user_info").select("*").or(`email.eq.${email},username.eq.${username}`);
     if (err) throw err;
     else {
@@ -16,7 +15,7 @@ export const registerController = async (req, res) => {
                 ]);
             if (error) throw error;
             else {
-                res.send("it worked");
+                res.send("user created");
             }
         }
         else{

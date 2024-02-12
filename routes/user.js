@@ -9,7 +9,7 @@ const router = express.Router();
 
 // all that is path  url/user
 router.get("", async (req, res) => {
-    const {data, err} = await supabase.from("user_info").select("*");
+    const {data, err} = await supabase.schema("public").from("user_info").select("*");
     if (err) throw err;
     else{
         res.send(data)
@@ -19,7 +19,7 @@ router.get("", async (req, res) => {
 
 router.get("/id", async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
-    const {data, err} = await supabase.from("user_info").select("*").eq("id", id);
+    const {data, err} = await supabase.schema("public").from("user_info").select("*").eq("id", id);
     if (err) throw err;
     else{
         if(data.length === 0){
