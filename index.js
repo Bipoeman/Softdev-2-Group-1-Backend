@@ -4,7 +4,6 @@ import register from './routes/register.js';
 import PinTheBin from "./routes/pinthebin.js"
 import { verifyToken } from "./controllers/token/token.js";
 import { config } from 'dotenv';
-import market from "./routes/market.js";
 import restroom from "./routes/restroom.js";
 import dekhor from './routes/dekhor.js';
 import cors from 'cors';
@@ -42,7 +41,6 @@ app.use("/login", login);
 app.use("/register", register);
 app.use("/user", user);
 app.use("/pinthebin",PinTheBin);
-app.use("/market",market);
 app.use("/restroom",restroom);
 app.use("/dekhor",dekhor)
 app.use("/support",support)

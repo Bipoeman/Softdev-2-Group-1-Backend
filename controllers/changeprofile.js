@@ -13,6 +13,6 @@ export const changeprofile = async (req, res) => {
         }).eq("id", id)
     if (error) throw error
     else{
-        res.send(data)
+        res.send("change profile success")
     }
 }
