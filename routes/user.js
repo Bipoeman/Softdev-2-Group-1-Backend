@@ -3,6 +3,7 @@ import supabase from "../controllers/database/database.js";
 import { decodeToken } from "../controllers/token/token.js";
 import { uploadprofilecontroller } from "../controllers/uploadprofile.js";
 import multer from "multer";
+import {changeprofile} from "../controllers/changeprofile.js";
 
 const uploadprofile = multer();
 const router = express.Router();
@@ -32,5 +33,7 @@ router.get("/id", async (req, res) => {
 });
 
 router.post("/upload",uploadprofile.single("file"),uploadprofilecontroller);
+
+router.put("",changeprofile);
 
 export default router;

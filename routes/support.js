@@ -13,8 +13,8 @@ router.post("", async (req, res) => {
     const {description, contact ,  finished = false} = req.body;
     const { data, error } = await supabase.schema("public")
         .from('support')
-        .insert(
-            { user_id,
+        .insert({
+                user_id,
                 description,
                 contact,
                 finished
