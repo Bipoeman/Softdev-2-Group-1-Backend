@@ -36,4 +36,14 @@ router.post("/upload",uploadprofile.single("file"),uploadprofilecontroller);
 
 router.put("",changeprofile);
 
+
+router.put("/changepassword",async (req,res)=>{
+    const id = decodeToken(req.headers.authorization).userId;
+    const {password: newpassword} = req.body;
+    const {data,err} = await supabase.schema("public").from("user_info").update({password: newpassword}).eq("id",id);
+    if (err) throw err;
+    else{
+        res.send(data)
+    }
+});
 export default router;
