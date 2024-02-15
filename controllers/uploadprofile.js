@@ -6,8 +6,9 @@ export const uploadprofilecontroller = async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
     const newminetype = "image/jpeg";
     const newfilename = `profile_${id}.jpeg`
-    const {data, err} = await supabase.from("user_info").select("profile").eq("id", id);
-    if (data[0].profile === null) {
+    const {data, error} = await supabase.from("user_info").select("profile").eq("id", id);
+    if (error) throw error;
+    else if (data[0].profile === null) {
         const {data: datapicture, err} = await supabase.storage.from("profile").upload(newfilename, file.buffer, {
             contentType: newminetype
         });
