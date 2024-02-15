@@ -3,7 +3,7 @@ import {decodeToken} from "../token/token.js";
 
 export const addbin = async (req, res) => {
     const userId = decodeToken(req.headers.authorization).userId;
-    const {location , description = null , bintype , latitude ,longitude} = req.body;
+    const {location , description = null , bintype  , latitude ,longitude} = req.body;
     const {data,error} = await supabase.from("bin_info").select("*").eq("latitude",latitude).eq("longitude",longitude);
     if (error) throw error;
     else if (data.length === 0 ){

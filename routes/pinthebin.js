@@ -14,7 +14,7 @@ router.get("", (req, res) => {
     res.send("test in pinthebin")
 })
 
-router.get("/bin",getbin )
+router.get("/bin",getbin)
 
 router.get("/bin/:id",getbinbyid)
 
