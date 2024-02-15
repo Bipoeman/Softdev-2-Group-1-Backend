@@ -5,7 +5,7 @@ export const supportControlloer = async (req, res) => {
     const user_id = decodeToken(req.headers.authorization).userId;
     const {description, contact ,  finished = false} = req.body;
     const { data, error } = await supabase
-        .from('support')
+        .from('comment')
         .insert({
             user_id,
             description,
