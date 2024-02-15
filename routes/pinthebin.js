@@ -1,9 +1,10 @@
 import express from "express";
 import {getbin, getbinbyid, searchbin} from "../controllers/pinthebin/getbin.js";
-import {addbin} from "../controllers/pinthebin/addbin.js";
+import {addbin, addpictureController} from "../controllers/pinthebin/addbin.js";
 import {updatebin} from "../controllers/pinthebin/updatebin.js";
+import multer from "multer";
 
-
+const uploadpicture = multer();
 const router = express.Router();
 
 router.get("", (req, res) => {
@@ -19,6 +20,11 @@ router.get("/bin/:id",getbinbyid)
 router.get("/bin/search",searchbin)
 //add bin_info
 router.post("/bin", addbin);
+
+// add picture to bin_info
+
+router.post("/bin/upload",uploadpicture.single("file"),addpictureController);
+
 //update bin_info
 router.put("/bin", updatebin);
 
