@@ -16,7 +16,7 @@ router.get("", (req, res) => {
 
 router.get("/bin",getbin)
 
-router.get("/bin/:id",getbinbyid)
+router.get("/bin/:id",getbinbyid )
 
 
 
