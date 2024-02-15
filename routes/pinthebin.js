@@ -3,6 +3,9 @@ import {getbin, getbinbyid, searchbin} from "../controllers/pinthebin/getbin.js"
 import {addbin, addpictureController} from "../controllers/pinthebin/addbin.js";
 import {updatebin} from "../controllers/pinthebin/updatebin.js";
 import multer from "multer";
+import {getbinreport} from "../controllers/pinthebin/getbinreport.js";
+import {deletebin} from "../controllers/pinthebin/deletebin.js";
+import {addbinreport} from "../controllers/pinthebin/addbinreport.js";
 
 const uploadpicture = multer();
 const router = express.Router();
@@ -29,17 +32,13 @@ router.post("/bin/upload",uploadpicture.single("file"),addpictureController);
 router.put("/bin", updatebin);
 
 // delete bin_info
-router.delete("/bin/:id", async (req, res) => {});
+router.delete("/bin/:id",deletebin);
 //show bin report
-router.get("/report",async (req,res)=>{});
+router.get("/report",getbinreport);
 
-router.post("/report",async (req,res)=>{}); //add report
+router.post("/report",addbinreport); //add report
 
 // last 3 is app report is portal app report
-
-
-
-
 
 
 export default router;
