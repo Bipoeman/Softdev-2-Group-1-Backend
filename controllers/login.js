@@ -5,7 +5,7 @@ import supabase from "./database/database.js";
 
 export const loginController = async (req, res) => {
     const { emailoruser, password } = req.body;
-    const { data, error } = await supabase.schema("public")
+    const { data, error } = await supabase
         .from('user_info')
         .select('*')
         .or(`email.eq.${emailoruser},username.eq.${emailoruser}`);

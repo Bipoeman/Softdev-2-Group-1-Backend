@@ -4,7 +4,7 @@ import supabase from "./database/database.js";
 export const supportControlloer = async (req, res) => {
     const user_id = decodeToken(req.headers.authorization).userId;
     const {description, contact ,  finished = false} = req.body;
-    const { data, error } = await supabase.schema("public")
+    const { data, error } = await supabase
         .from('support')
         .insert({
             user_id,
