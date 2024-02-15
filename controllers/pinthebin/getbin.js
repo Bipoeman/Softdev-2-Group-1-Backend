@@ -16,8 +16,11 @@ export const getbinbyid = async (req,res)=>{
 }
 
 export const searchbin = async (req,res)=>{
-    const {locations,description} = req.body;
-    const {data,error} = await supabase.schema("pinthebin").from("bin_info").select("*").like("location",locations).like("description",description);
+    const {locationsordescription} = req.body;
+    const {data,error} = await supabase.schema("pinthebin")
+        .from("bin_info")
+        .select("*")
+        .or(`location.like.${locationsordescription}`,`description.like.${locationsordescription}`);
     if (error) throw error;
     else{res.send(data)}
 };
