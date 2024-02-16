@@ -9,8 +9,8 @@ router.get("/", (req, res) => {});
 // get data of toliet by admin role ??
 router.get("/admin", (req, res) => {});
 
-
-router.post
+// create toliet
+router.post("/toliet", );
 
 
 
