@@ -1,5 +1,8 @@
 import express from "express";
+import multer from "multer";
 
+
+const uploadfile = multer();
 const router = express.Router();
 
 
@@ -11,7 +14,6 @@ router.get("/admin", (req, res) => {});
 
 // create toliet
 router.post("/toliet", );
-
 
 
 // create comment for toliet
