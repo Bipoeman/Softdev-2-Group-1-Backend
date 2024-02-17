@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
 import {addtoilet} from "../controllers/restroom/addtoilet.js";
+import {gettoilet} from "../controllers/restroom/getToilet.js";
 
 
 const uploadfile = multer();
@@ -9,15 +10,7 @@ const router = express.Router();
 
 
 // get data of toliet
-router.get("/", async (req, res) => {
-    const {data, error} = await supabase.from("toliet_info").select("*");
-    if (error) throw error;
-    else{
-        res.send(data);
-    }
-});
-
-
+router.get("/", gettoilet);
 
 
 // create toliet
