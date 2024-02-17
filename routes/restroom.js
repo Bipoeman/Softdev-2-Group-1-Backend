@@ -1,5 +1,6 @@
 import express from "express";
 import multer from "multer";
+import supabase from "../controllers/database/database.js";
 
 
 const uploadfile = multer();
@@ -7,7 +8,13 @@ const router = express.Router();
 
 
 // get data of toliet
-router.get("/", (req, res) => {});
+router.get("/", async (req, res) => {
+    const {data, error} = await supabase.from("toliet_info").select("*");
+    if (error) throw error;
+    else{
+        res.send(data);
+    }
+});
 
 // get data of toliet by admin role ??
 router.get("/admin", (req, res) => {});
@@ -15,11 +22,14 @@ router.get("/admin", (req, res) => {});
 // create toliet
 router.post("/toliet", );
 
+// get star to something
+router.post("/star", async (req, res) => {
+
+})
 
 // create comment for toliet
 router.post("/comment", (req, res) => {
 });
-
 
 
 export default router;
