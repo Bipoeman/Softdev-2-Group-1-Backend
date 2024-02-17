@@ -1,16 +1,17 @@
 import supabase from "../database/database.js";
+import { decodeToken } from "../token/token.js";
 
 export const addcomment = async (req, res) => {
   const userId = decodeToken(req.headers.authorization).userId;
   const { star, comment, name_toilet } = req.body;
   const { data, error } = await supabase
-    .from("toliet_comment")
+    .from("toilet_comment")
     .insert([
       {
         star,
         comment,
         name_toilet,
-        user_update: userId,
+        user_id: userId,
       },
     ])
     .select();

@@ -14,7 +14,7 @@ const router = express.Router();
 router.get("/", gettoilet);
 
 // create toliet
-router.post("/toliet", addtoilet);
+router.post("/toilet", addtoilet);
 
 // get star to something
 router.post("/star", avgstar);

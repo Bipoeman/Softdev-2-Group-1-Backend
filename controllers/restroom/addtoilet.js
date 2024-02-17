@@ -3,7 +3,7 @@ import supabase from "../database/database.js";
 export const addtoilet = async (req, res) => {
   const { name, address, latitude, longitude, type } = req.body;
   const { data, error } = await supabase
-    .from("toliet_info")
+    .from("toilet_info")
     .select("*")
     .eq("latitude", latitude)
     .eq("longitude", longitude);
@@ -11,7 +11,7 @@ export const addtoilet = async (req, res) => {
   else {
     if (data.length === 0) {
       const { data, error } = await supabase
-        .from("toliet_info")
+        .from("toilet_info")
         .insert([
           {
             name,
@@ -27,7 +27,7 @@ export const addtoilet = async (req, res) => {
         res.send(data);
       }
     } else {
-      res.send("toliet already exist");
+      res.send("toilet already exist");
     }
   }
 };
