@@ -23,7 +23,7 @@ export const uploadtoiletcomment = async (req, res) => {
       const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
       const { data, err } = await supabase
         .from("toilet_comment")
-        .update({ profile: url })
+        .update({ picture: url })
         .eq("id", commentid)
         .select();
       if (err) throw err;
