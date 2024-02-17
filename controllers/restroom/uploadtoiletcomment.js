@@ -33,7 +33,7 @@ export const uploadtoiletcomment = async (req, res) => {
     }
   } else {
     const { data, err } = await supabase.storage
-      .from("restroom")
+      .from("restroom_comment")
       .update(newfilename, file.buffer, {
         contentType: newminetype,
       });
