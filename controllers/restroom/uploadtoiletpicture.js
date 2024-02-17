@@ -1,0 +1,1 @@
+export const uploadtoiletpicture = async (req, res) => {};

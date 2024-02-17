@@ -21,9 +21,9 @@ router.post("/star", async (req, res) => {
 
 })
 
-router.post("/upload/toilet", uploadfile.single("file"), async (req, res) => {});
+router.post("/upload/toilet", uploadfile.single("file"),uploadtoiletpicture);
 
-router.post("/upload/comment", uploadfile.single("file"), async (req, res) => {});
+router.post("/upload/comment", uploadfile.single("file"),uploadtoiletcomment);
 
 // create comment for toliet
 router.post("/comment", (req, res) => {
