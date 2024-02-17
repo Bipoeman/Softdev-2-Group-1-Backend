@@ -4,7 +4,7 @@ export const uploadtoiletcomment = async (req, res) => {
   const file = req.file;
   const { commentid } = req.body;
   const newminetype = "image/jpeg";
-  const newfilename = `toilet_comment_${id}.jpeg`;
+  const newfilename = `toilet_comment_${commentid}.jpeg`;
   const { data, error } = await supabase
     .from("toilet_comment")
     .select("picture")
