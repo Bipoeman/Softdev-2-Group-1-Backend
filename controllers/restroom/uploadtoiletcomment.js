@@ -14,7 +14,7 @@ export const uploadtoiletcomment = async (req, res) => {
     res.status(404).send("toilet not found");
   } else if (data[0].pictre === null) {
     const { data: datapicture, error } = await supabase.storage
-      .select("restroom_comment")
+      .from("restroom_comment")
       .upload(newfilename, file.buffer, {
         contentType: newminetype,
       });
