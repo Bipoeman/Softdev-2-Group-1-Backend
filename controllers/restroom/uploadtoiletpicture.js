@@ -12,7 +12,7 @@ export const uploadtoiletpicture = async (req, res) => {
   if (error) throw error;
   else if (data.length === 0) {
     res.status(404).send("toilet not found");
-  } else if (data[0].pictre === null) {
+  } else if (data[0].picture === null) {
     const { data: datapicture, error } = await supabase.storage
       .from("restroom")
       .upload(newfilename, file.buffer, {
