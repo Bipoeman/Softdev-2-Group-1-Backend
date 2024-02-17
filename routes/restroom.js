@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
+import {addtoilet} from "../controllers/restroom/addtoilet.js";
 
 
 const uploadfile = multer();
@@ -16,11 +17,11 @@ router.get("/", async (req, res) => {
     }
 });
 
-// get data of toliet by admin role ??
-router.get("/admin", (req, res) => {});
+
+
 
 // create toliet
-router.post("/toliet", );
+router.post("/toliet",addtoilet);
 
 // get star to something
 router.post("/star", async (req, res) => {
