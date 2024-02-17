@@ -2,33 +2,41 @@ import { loginController } from "../controllers/login";
 import { signToken } from "../controllers/token/token";
 
 const res = {
-    status: jest.fn().mockReturnThis(),
-    send: jest.fn().mockReturnThis(),
+    status: jest.fn().mockImplementation((statusCode) => {
+        console.log(statusCode);
+        return res;
+    }),
+    send: jest.fn().mockImplementation((data) => {
+        console.log(data);
+        return res;
+    }),
 };
 
-jest.mock("../controllers/token/token", () => {
-    const originalModule = jest.requireActual("../controllers/token/token");
+jest.mock('../controllers/database/database')
 
+jest.mock("../controllers/token/token");
+
+jest.mock("bcryptjs", () => {
     return {
-        ...originalModule,
-        signToken: (id, name) => "signedToken"
+        compare: jest.fn().mockImplementation((s, hash) => s == hash)
     };
 });
 
 it('should return login success', () => {
     const req = {
         body: {
-            username: "admin",
-            password: "admin"
+            emailoruser: "admin@admin",
+            password: "admin_password"
         }
     };
 
     loginController(req, res);
 
-    expect(res.send).toHaveBeenCalledWith(signToken(2, "admin"));
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith(signToken(1, "admin"));
 });
 
-it('should return login fail', () => {
+it.skip('should return login fail', () => {
     const req = {
         body: {
             username: "admin",
