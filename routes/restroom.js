@@ -21,6 +21,10 @@ router.post("/star", async (req, res) => {
 
 })
 
+router.post("/upload/toilet", uploadfile.single("file"), async (req, res) => {});
+
+router.post("/upload/comment", uploadfile.single("file"), async (req, res) => {});
+
 // create comment for toliet
 router.post("/comment", (req, res) => {
 });
