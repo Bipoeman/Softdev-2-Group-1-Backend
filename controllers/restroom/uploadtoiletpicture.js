@@ -7,7 +7,7 @@ export const uploadtoiletpicture = async (req, res) => {
   const newfilename = `toilet_${id}.jpeg`;
   const { data, error } = await supabase
     .from("toilet_info")
-    .select("pictre")
+    .select("picture")
     .eq("id", toiletid);
   if (error) throw error;
   else if (data.length === 0) {
@@ -23,7 +23,7 @@ export const uploadtoiletpicture = async (req, res) => {
       const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
       const { data, err } = await supabase
         .from("toilet_info")
-        .update({ pictre: url })
+        .update({ picture: url })
         .eq("id", toiletid)
         .select();
       if (err) throw err;

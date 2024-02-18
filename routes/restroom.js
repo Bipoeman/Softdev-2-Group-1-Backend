@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { avgstar } from "../controllers/restroom/avgstar.js";
+import { getreview } from "../controllers/restroom/getreview.js";
 import { addtoilet } from "../controllers/restroom/addtoilet.js";
 import { gettoilet } from "../controllers/restroom/getToilet.js";
 import { uploadtoiletpicture } from "../controllers/restroom/uploadtoiletpicture.js";
@@ -16,8 +16,8 @@ router.get("/", gettoilet);
 // create toliet
 router.post("/toilet", addtoilet);
 
-// get star to something
-router.post("/star", avgstar);
+// get star and comment to something
+router.post("/review", getreview);
 
 router.post("/upload/toilet", uploadfile.single("file"), uploadtoiletpicture);
 
