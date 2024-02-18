@@ -26,8 +26,8 @@ export const verifyToken = (rawToken) => {
     return authorized;
 };
 
-export const signToken = (id, email) =>{
-    return jwt.sign({userId: id, email: email}, secretKey, {expiresIn: '1h'});
+export const signToken = (id, role) =>{
+    return jwt.sign({userId: id, role: role}, secretKey, {expiresIn: '1h'});
 }
 
 export const decodeToken = (token) =>{

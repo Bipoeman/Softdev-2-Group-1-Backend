@@ -1,28 +1,44 @@
 import express from "express";
-import {uploadpinthebin} from "../controllers/multer.js";
-import fs from "fs";
-import path from "path";
-import {decodeToken} from "../controllers/token/token.js";
+import {getbin, getbinbyid, searchbin} from "../controllers/pinthebin/getbin.js";
+import {addbin, addpictureController} from "../controllers/pinthebin/addbin.js";
+import {updatebin} from "../controllers/pinthebin/updatebin.js";
+import multer from "multer";
+import {getbinreport} from "../controllers/pinthebin/getbinreport.js";
+import {deletebin} from "../controllers/pinthebin/deletebin.js";
+import {addbinreport} from "../controllers/pinthebin/addbinreport.js";
 
+const uploadpicture = multer();
 const router = express.Router();
 
 router.get("", (req, res) => {
     res.send("test in pinthebin")
 })
 
-router.post("/upload", uploadpinthebin.single("file"), (req, res) => {
-    const id = req.body.id;
-    console.log(req.file);
-    const fileNameWithExtension = `bin_${id}` + path.extname(req.file.originalname)
-    fs.rename(req.file.path, path.join(req.file.destination, fileNameWithExtension), (err) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            console.log("rename success");
-        }
-    })
-    res.send("upload success")
-})
+router.get("/bin",getbin)
+
+router.get("/bin/:id",getbinbyid )
+
+
+
+router.get("/bin/search",searchbin)
+//add bin_info
+router.post("/bin", addbin);
+
+// add picture to bin_info
+
+router.post("/bin/upload",uploadpicture.single("file"),addpictureController);
+
+//update bin_info
+router.put("/bin", updatebin);
+
+// delete bin_info
+router.delete("/bin/:id",deletebin);
+//show bin report
+router.get("/report",getbinreport);
+
+router.post("/report",addbinreport); //add report
+
+// last 3 is app report is portal app report
+
 
 export default router;
