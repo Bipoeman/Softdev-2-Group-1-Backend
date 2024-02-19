@@ -6,6 +6,7 @@ export const findbinlike = async (req, res) => {
     .select("*")
     .or(`location.ilike.${findtext},description.ilike.${findtext}`);
     if(error) throw error;
+    else if (data.length === 0) res.send("No bin found");
     else{
         res.send(data);
     }
