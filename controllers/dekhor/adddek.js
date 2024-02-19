@@ -60,7 +60,7 @@ export const addtitlepicture = async (req, res) => {
 
 export const likepost = async (req,res) =>{
     const id_user = decodeToken(req.headers.authorization).userId;
-    const id_post = req.query.id_post;
+    const {id_post} = req.query;
     const {data,error} = await supabase.from("dekhor_savepost").insert({id_user,id_post})
     if (error ){
         res.status(500).json(error);
@@ -73,8 +73,7 @@ export const likepost = async (req,res) =>{
 
 export const commentpost = async (req,res) =>{
     const id_user = decodeToken(req.headers.authorization).userId;
-    const id_post  = req.query.id_post;
-    const comment = req.body.comment;
+    const {comment,id_post} = req.body;
     const {data,error} = await supabase.from("dekhor_comment").insert({id_user,id_post,comment})
     if (error ){
         res.status(500).json({ msg: error.message });
