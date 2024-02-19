@@ -4,6 +4,7 @@ import supabase from "../controllers/database/database.js";
 import { blogger, commentpost, likepost, searchblog,addpost,addtitlepicture } from "../controllers/dekhor/adddek.js";
 import { countlike, detailpost, posttocategory, showcomment, showlike,posttoprofile } from "../controllers/dekhor/getdek.js";
 import { unlike,deletepost } from "../controllers/dekhor/deldek.js";
+import {getrandompost} from "../controllers/dekhor/getrandompost.js";
 
 const uploadtitlepicture = multer();
 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.post("/createpost",addpost); // test success
 
+// รูปภาพของ post
 router.post("/upload",uploadtitlepicture.single("file"),addtitlepicture); // test พร้อม createpost ??
 
 router.delete("/deletepost",deletepost); // test success
@@ -25,20 +27,7 @@ router.post("/commentpost",commentpost); // test success
 
 router.get("/showcomment",showcomment); // test success
 
-router.post("/randompost",async (req,res) => {
-    const { data, error } = await supabase
-    .from('updaterandom') // Replace with your table name
-    .select('id_post,title,category,user:profiles!Create_Post_id_fkey(username),image_link')
-    // .order('random()') // This orders the rows randomly
-    .limit(6); // Adjust the limit as needed
-    if (error) {
-        console.error('Error fetching random rows:', error);
-    } else {
-        res.status(200).json(data);
-        // console.log('Random rows:', data);
-    // Do something with the random rows
-    }
-})
+router.post("/randompost",getrandompost)
 
 router.get("/showlike",showlike); // test success
 

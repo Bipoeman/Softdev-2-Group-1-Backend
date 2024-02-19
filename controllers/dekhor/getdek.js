@@ -70,7 +70,9 @@ export const posttocategory = async (req, res) => {
 
 export const detailpost = async (req, res) => {
     const { id_post } = req.query;
-    const { data, error } = await supabase.from("dekhor_post").select('id_post,title,content, category, image_link, user:public_dekhor_post_id_user_fkey(fullname)').eq("id_post", id_post)
+    const { data, error } = await supabase.from("dekhor_post")
+        .select('id_post,title,content, category, image_link, user:public_dekhor_post_id_user_fkey(fullname)')
+        .eq("id_post", id_post)
     if (error) {
         console.log(data)
         res.status(400).json(error);
