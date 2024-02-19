@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo 'Skipped Jest Testing' & exit 0",
+    "test": "jest",
     "dev": "nodemon index"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "@supabase/supabase-js": "^2.39.3",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
