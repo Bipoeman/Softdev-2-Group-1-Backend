@@ -11,7 +11,7 @@ const router = express.Router();
 // all that is path  url/user
 router.get("", async (req, res) => {
     const {data, err} = await supabase.from("user_info").select("*");
-    if (err) throw err;
+    if (err) {res.status(500).send(err)}
     else{
         res.send(data)
     }
@@ -21,7 +21,7 @@ router.get("", async (req, res) => {
 router.get("/id", async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
     const {data, err} = await supabase.from("user_info").select("*").eq("id", id);
-    if (err) throw err;
+    if (err) {res.status(500).send(err)}
     else{
         if(data.length === 0){
             res.status(404).send("user not found")
@@ -41,7 +41,7 @@ router.put("/changepassword",async (req,res)=>{
     const id = decodeToken(req.headers.authorization).userId;
     const {password: newpassword} = req.body;
     const {data,err} = await supabase.schema("public").from("user_info").update({password: newpassword}).eq("id",id);
-    if (err) throw err;
+    if (err) {res.status(500).send(err)}
     else{
         res.send(data)
     }
