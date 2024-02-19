@@ -9,7 +9,7 @@ export const loginController = async (req, res) => {
         .from('user_info')
         .select('*')
         .or(`email.eq.${emailoruser},username.eq.${emailoruser}`);
-    if (error) throw error;
+    if (error) {res.status(500).send(error)}
     else {
         if (data.length === 0) {
             res.status(400).json({ error: true, message: "user does not exist" });

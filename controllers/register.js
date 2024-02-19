@@ -3,8 +3,8 @@ import bcrypt from "bcryptjs";
 
 export const registerController = async (req, res) => {
     const {email, fullname, username, password} = req.body;
-    const {data, err} = await supabase.from("user_info").select("*").or(`email.eq.${email},username.eq.${username}`);
-    if (err) throw err;
+    const {data, error} = await supabase.from("user_info").select("*").or(`email.eq.${email},username.eq.${username}`);
+    if (error) {res.status(500).send(error)}
     else {
         if(data.length === 0){
             const hashedPassword = bcrypt.hashSync(password, 10);
@@ -13,7 +13,7 @@ export const registerController = async (req, res) => {
                 .insert([
                     { email, fullname, username, password:hashedPassword }
                 ]);
-            if (error) throw error;
+            if (error){res.status(500).send(error)}
             else {
                 res.send("user created");
             }

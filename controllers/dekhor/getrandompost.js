@@ -6,9 +6,8 @@ export const getrandompost = async (req,res) => {
         .select('id_post,title,category,user:profiles!Create_Post_id_fkey(username),image_link')
         // .order('random()') // This orders the rows randomly
         .limit(6); // Adjust the limit as needed
-    if (error) {
-        console.error('Error fetching random rows:', error);
-    } else {
+    if (error) {res.status(500).send(error)}
+    else {
         res.status(200).json(data);
         // console.log('Random rows:', data);
         // Do something with the random rows

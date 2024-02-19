@@ -5,7 +5,7 @@ export const addbin = async (req, res) => {
     const userId = decodeToken(req.headers.authorization).userId;
     const {location , description = null , bintype  , latitude ,longitude} = req.body;
     const {data,error} = await supabase.from("bin_info").select("*").eq("latitude",latitude).eq("longitude",longitude);
-    if (error) throw error;
+    if (error) {res.status(500).send(error)}
     else if (data.length === 0 ){
         const {data, error} = await supabase.from("bin_info").insert([{
             location,
@@ -15,7 +15,7 @@ export const addbin = async (req, res) => {
             longitude,
             user_update:userId
         }]).select();
-        if (error) throw error;
+        if (error) {res.status(500).send(error)}
         else {
             res.send(data);
         }
@@ -31,28 +31,28 @@ export const addpictureController = async (req, res) => {
     const newminetype = "image/jpeg";
     const newfilename = `bin_${binId}.jpeg`;
     let {data, error} = await supabase.from("bin_info").select("*").eq("id", binId);
-    if (error) throw error;
+    if (error) {res.status(500).send(error)}
     else if (data[0].picture === null) {
-        const {data: datapicture, err} = await supabase.storage.from("bin").upload(newfilename, file.buffer, {
+        const {data: datapicture, error} = await supabase.storage.from("bin").upload(newfilename, file.buffer, {
             contentType: newminetype
         });
-        if (err) throw err;
+        if (error) {res.status(500).send(error)}
         else {
             const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
             const {
                 data,
-                err
+                error
             } = await supabase.from("bin_info").update({picture: url}).eq("id", binId).select();
-            if (err) throw err;
+            if (error) {res.status(500).send(error)}
             else {
                 res.send(data);
             }
         }
     } else {
-        const {data, err} = await supabase.storage.from("bin").update(newfilename, file.buffer, {
+        const {data, error} = await supabase.storage.from("bin").update(newfilename, file.buffer, {
             contentType: newminetype
         });
-        if (err) throw err;
+        if (error) {res.status(500).send(error)}
         else {
             res.send(data)
         }

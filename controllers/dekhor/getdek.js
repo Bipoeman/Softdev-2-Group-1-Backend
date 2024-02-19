@@ -8,9 +8,7 @@ export const countlike = async (req, res) => {
         .from("dekhor_savepost")
         .select('*', { count: 'exact' })
         .eq("id_post", id_post)
-    if (error) {
-        res.status(500).json(error);
-    }
+    if (error) {res.status(500).send(error)}
     else {
         res.status(200).json(data);
     }
@@ -19,9 +17,7 @@ export const countlike = async (req, res) => {
 export const showcomment = async (req, res) => {
     const { id_post } = req.query
     const { data, error } = await supabase.from("dekhor_comment").select('user: user_info(fullname),comment').eq("id_post", id_post)
-    if (error) {
-        res.status(500).json(error);
-    }
+    if (error) {res.status(500).send(error)}
     else {
         res.status(200).json(data);
     }
@@ -32,10 +28,7 @@ export const showlike = async (req, res) => {
     const { data, error } = await supabase
         .from('dekhor_savepost')
         .select('post:dekhor_post(id_post,title,category,image_link),user:user_info(fullname)').eq("id_user", id_user)
-    if (error) {
-        console.log(data)
-        res.status(400).json(error);
-    }
+    if (error) {res.status(500).send(error)}
     else {
         res.status(200).json(data);
     }
@@ -48,10 +41,8 @@ export const posttoprofile = async (req, res) => {
         .select('id_post,title, category, image_link, user:public_dekhor_post_id_user_fkey(fullname)')
         .eq("id_user", id_user);
 
-    if (error) {
-        console.log(error);
-        res.status(400).json(error);
-    } else {
+    if (error) {res.status(500).send(error)}
+    else {
         res.status(200).json(data);
     }
 }
@@ -59,10 +50,7 @@ export const posttoprofile = async (req, res) => {
 export const posttocategory = async (req, res) => {
     const { category } = req.query;
     const { data, error } = await supabase.from("dekhor_post").select('id_post,title, category, image_link, user:public_dekhor_post_id_user_fkey(fullname)').eq("category", category)
-    if (error) {
-        console.log(error)
-        res.status(400).json(error);
-    }
+    if (error) {res.status(500).send(error)}
     else {
         res.status(200).json(data);
     }
@@ -73,10 +61,7 @@ export const detailpost = async (req, res) => {
     const { data, error } = await supabase.from("dekhor_post")
         .select('id_post,title,content, category, image_link, user:public_dekhor_post_id_user_fkey(fullname)')
         .eq("id_post", id_post)
-    if (error) {
-        console.log(data)
-        res.status(400).json(error);
-    }
+    if (error) {res.status(500).send(error)}
     else {
         res.status(200).json(data);
     }

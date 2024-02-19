@@ -9,7 +9,7 @@ export const uploadtoiletpicture = async (req, res) => {
     .from("toilet_info")
     .select("picture")
     .eq("id", toiletid);
-  if (error) throw error;
+  if (error) {res.status(500).send(error)}
   else if (data.length === 0) {
     res.status(404).send("toilet not found");
   } else if (data[0].picture === null) {
@@ -18,7 +18,7 @@ export const uploadtoiletpicture = async (req, res) => {
       .upload(newfilename, file.buffer, {
         contentType: newminetype,
       });
-    if (error) throw error;
+    if (error) {res.status(500).send(error)}
     else {
       const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
       const { data, err } = await supabase
@@ -26,7 +26,7 @@ export const uploadtoiletpicture = async (req, res) => {
         .update({ picture: url })
         .eq("id", toiletid)
         .select();
-      if (err) throw err;
+      if (err) {res.status(500).send(error)}
       else {
         res.send(data);
       }
@@ -37,7 +37,7 @@ export const uploadtoiletpicture = async (req, res) => {
       .update(newfilename, file.buffer, {
         contentType: newminetype,
       });
-    if (err) throw err;
+    if (err) {res.status(500).send(error)}
     else {
       res.send(data);
     }

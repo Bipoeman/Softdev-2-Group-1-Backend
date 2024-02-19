@@ -2,7 +2,7 @@ import supabase from "../database/database.js";
 
 export const getbin = async (req, res) => {
   const { data, error } = await supabase.from("bin_info").select("*");
-  if (error) throw error;
+  if (error) {res.status(500).send(error)}
   else {
     res.send(data);
   }
@@ -14,7 +14,7 @@ export const getbinbyid = async (req, res) => {
     .from("bin_info")
     .select("*")
     .eq("id", bin_id);
-  if (error) throw error;
+  if (error) {res.status(500).send(error)}
   else {
     if (data.length === 0) {
       res.status(404).send("bin not found");
