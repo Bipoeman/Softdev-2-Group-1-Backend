@@ -1,10 +1,10 @@
 import express from "express";
 import multer from "multer";
-import supabase from "../controllers/database/database.js";
 import { blogger, commentpost, likepost, searchblog,addpost,addtitlepicture } from "../controllers/dekhor/adddek.js";
 import { countlike, detailpost, posttocategory, showcomment, showlike,posttoprofile } from "../controllers/dekhor/getdek.js";
 import { unlike,deletepost } from "../controllers/dekhor/deldek.js";
 import {getrandompost} from "../controllers/dekhor/getrandompost.js";
+import {getidtopic} from "../controllers/dekhor/getidtopic.js";
 
 const uploadtitlepicture = multer();
 
@@ -48,17 +48,7 @@ router.get("/detailpost",detailpost); //test success
 //     }
 // })
 
-router.get("/idtopic", async (req, res) => {
-    const {id} = req.query;
-    const { data, error } = await supabase.from("profiles").select('avatar_url').eq("id",id);
-    if (error){
-        console.log(data)
-        res.status(400).json(error);
-    }
-    else{
-        res.status(200).json(data);
-    }
-})
+router.get("/idtopic", getidtopic)
 
 router.post("/blogger", blogger);
 
