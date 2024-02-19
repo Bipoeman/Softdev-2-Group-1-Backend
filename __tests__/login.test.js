@@ -4,40 +4,61 @@ import { signToken } from "../controllers/token/token";
 const res = {
     status: jest.fn().mockReturnThis(),
     send: jest.fn().mockReturnThis(),
+    json: jest.fn().mockReturnThis(),
 };
 
-jest.mock("../controllers/token/token", () => {
-    const originalModule = jest.requireActual("../controllers/token/token");
+jest.mock("../controllers/database/database");
 
+jest.mock("../controllers/token/token");
+
+jest.mock("bcryptjs", () => {
     return {
-        ...originalModule,
-        signToken: (id, name) => "signedToken"
+        compare: jest.fn().mockImplementation((s, hash) => s == hash)
     };
 });
 
-it('should return login success', () => {
+it('should return login success', async () => {
     const req = {
         body: {
-            username: "admin",
-            password: "admin"
+            emailoruser: "admin@admin",
+            password: "admin_password"
         }
     };
 
-    loginController(req, res);
+    await loginController(req, res);
 
-    expect(res.send).toHaveBeenCalledWith(signToken(2, "admin"));
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith(signToken(1, "admin"));
 });
 
-it('should return login fail', () => {
+it('should return login fail (no user)', async () => {
     const req = {
         body: {
-            username: "admin",
-            password: "admin1"
+            emailoruser: "user@email",
+            password: "admin_password"
         }
     };
 
-    loginController(req, res);
+    await loginController(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.send).toHaveBeenCalledWith('login fail');
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+        error: true
+    }));
+});
+
+it('should return login fail (wrong password)', async () => {
+    const req = {
+        body: {
+            emailoruser: "admin@admin",
+            password: "wrong"
+        }
+    };
+
+    await loginController(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+        error: true
+    }));
 });
