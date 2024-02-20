@@ -25,10 +25,10 @@ export const addpost = async (req, res) => {
 
 export const addtitlepicture = async (req, res) => {
     const file = req.file;
-    const id_post = req.body.id;
+    const id_post = req.body;
     const newminetype = "image/jpeg";
     const newfilename = `dekhorblog_${id_post}.jpeg`;
-    let {data, error} = await supabase.from("create_post").select("image_link").eq("id", id_post);
+    let {data, error} = await supabase.from("dekhor_post").select("image_link").eq("id_post", id_post);
     if (error) throw error;
     else if (data[0].picture === null) {
         const {data: datapicture, err} = await supabase.storage.from("dekhor").upload(newfilename, file.buffer, {
@@ -58,7 +58,7 @@ export const addtitlepicture = async (req, res) => {
 }
 
 
-export const likepost = async (req,res) =>{
+export const savepost = async (req,res) =>{
     const id_user = decodeToken(req.headers.authorization).userId;
     const {id_post} = req.query;
     const {data,error} = await supabase.from("dekhor_savepost").insert({id_user,id_post})

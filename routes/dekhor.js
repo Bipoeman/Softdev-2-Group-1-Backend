@@ -1,8 +1,8 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
-import { blogger, commentpost, likepost, searchblog,addpost,addtitlepicture } from "../controllers/dekhor/adddek.js";
-import { countlike, detailpost, posttocategory, showcomment, showlike,posttoprofile } from "../controllers/dekhor/getdek.js";
+import { blogger, commentpost, savepost,addpost,addtitlepicture } from "../controllers/dekhor/adddek.js";
+import { countlike, detailpost, posttocategory, showcomment, showsave,posttoprofile ,searchblog ,searchblogger} from "../controllers/dekhor/getdek.js";
 import { unlike,deletepost } from "../controllers/dekhor/deldek.js";
 import {getrandompost} from "../controllers/dekhor/getrandompost.js";
 
@@ -17,7 +17,7 @@ router.post("/upload",uploadtitlepicture.single("file"),addtitlepicture); // tes
 
 router.delete("/deletepost",deletepost); // test success
 
-router.post("/likepost",likepost); // test success
+router.post("/savepost",savepost); // test success
 
 router.get("/countlike",countlike); // test success
 
@@ -27,11 +27,11 @@ router.post("/commentpost",commentpost); // test success
 
 router.get("/showcomment",showcomment); // test success
 
-router.post("/randompost",getrandompost)
+router.get("/randompost",getrandompost)
 
-router.get("/showlike",showlike); // test success
+router.get("/showsave",showsave); // test success // connect
 
-router.get("/posttoprofile",posttoprofile); //test success
+router.get("/posttoprofile",posttoprofile); //test success // connect ?? image asset or network , like number
 
 router.get("/posttocategory",posttocategory); // test success
 
@@ -62,8 +62,9 @@ router.get("/idtopic", async (req, res) => {
 
 router.post("/blogger", blogger);
 
-router.post("/searchblog",searchblog); // test success
+router.get("/searchblog",searchblog); // test success // connect
 
+router.get("/searchblogger",searchblogger); // connect
 
 //search user
 // router.post("/searcuser",async (req,res)=> {
