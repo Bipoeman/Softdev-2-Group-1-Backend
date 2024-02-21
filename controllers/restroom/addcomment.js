@@ -15,8 +15,9 @@ export const addcomment = async (req, res) => {
       },
     ])
     .select();
-  if (error) throw error;
-  else {
+  if (error) {
+    res.status(500).send(error);
+  } else {
     res.send(data);
   }
 };

@@ -9,25 +9,28 @@ export const uploadtoiletcomment = async (req, res) => {
     .from("toilet_comment")
     .select("picture")
     .eq("id", commentid);
-  if (error) throw error;
-  else if (data.length === 0) {
+  if (error) {
+    res.status(500).send(error);
+  } else if (data.length === 0) {
     res.status(404).send("toilet not found");
-  } else if (data[0].pictre === null) {
+  } else if (data[0].picture === null) {
     const { data: datapicture, error } = await supabase.storage
       .from("restroom_comment")
       .upload(newfilename, file.buffer, {
         contentType: newminetype,
       });
-    if (error) throw error;
-    else {
+    if (error) {
+      res.status(500).send(error);
+    } else {
       const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
       const { data, err } = await supabase
         .from("toilet_comment")
         .update({ picture: url })
         .eq("id", commentid)
         .select();
-      if (err) throw err;
-      else {
+      if (err) {
+        res.status(500).send(err);
+      } else {
         res.send(data);
       }
     }
@@ -37,8 +40,9 @@ export const uploadtoiletcomment = async (req, res) => {
       .update(newfilename, file.buffer, {
         contentType: newminetype,
       });
-    if (err) throw err;
-    else {
+    if (err) {
+      res.status(500).send(err);
+    } else {
       res.send(data);
     }
   }
