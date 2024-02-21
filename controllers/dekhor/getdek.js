@@ -114,3 +114,17 @@ export const searchblogger = async (req,res)=> {
         res.status(200).json(data);
     }
 }
+
+export const getprofile = async (req,res) =>{
+    const id_user = req.params;
+    const { data: {user}, error } = await supabase.from("user_info").select('fullname').eq("id_user",id_user);
+    if (error){
+        res.status(500).json(error);
+    }
+    else{
+        res.status(200).json({
+            email: user.email,
+            user_metadata: user.user_metadata
+        });
+    }
+}

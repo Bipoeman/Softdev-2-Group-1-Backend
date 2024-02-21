@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
 import { blogger, commentpost, savepost,addpost,addtitlepicture } from "../controllers/dekhor/adddek.js";
-import { countlike, detailpost, posttocategory, showcomment, showsave,posttoprofile ,searchblog ,searchblogger} from "../controllers/dekhor/getdek.js";
+import { countlike, detailpost, posttocategory, showcomment, showsave,posttoprofile ,searchblog ,searchblogger,getprofile} from "../controllers/dekhor/getdek.js";
 import { unlike,deletepost } from "../controllers/dekhor/deldek.js";
 import {getrandompost} from "../controllers/dekhor/getrandompost.js";
 
@@ -36,6 +36,9 @@ router.get("/posttoprofile",posttoprofile); //test success // connect ?? image a
 router.get("/posttocategory",posttocategory); // test success
 
 router.get("/detailpost",detailpost); //test success
+
+router.get("/getprofile",getprofile);
+
 // router.get("/nameprofile", async (req, res) => {
 //     const {id} = req.query;
 //     const { data, error } = await supabase.from("Create_Post").select('id,user:profiles!Create_Post_id_fkey(username)').eq("id",id);
@@ -65,20 +68,6 @@ router.post("/blogger", blogger);
 router.get("/searchblog",searchblog); // test success // connect
 
 router.get("/searchblogger",searchblogger); // connect
-
-//search user
-// router.post("/searcuser",async (req,res)=> {
-//     const {data,error} = await supabase.from("user_info").select('title,user:profiles!Create_Post_id_fkey(username),category,id_post,image_link') 
-//     if (error){
-//         console.log(error)
-//         res.status(400).json(error);
-//     }
-//     else{
-//         res.status(200).json(data);
-//     }
-// })
-
-
 
 
 export default router;
