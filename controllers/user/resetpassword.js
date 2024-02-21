@@ -8,6 +8,12 @@ export const resetpassword = async (req, res) => {
         res.status(400).json({ error: true, message: "user does not exist" });
     }
     else{
-        res.send("password reset link sent to your email");
+        // logic reset password
     }
 };
+
+
+
+const mailsender = async (email,) => {
+
+}
