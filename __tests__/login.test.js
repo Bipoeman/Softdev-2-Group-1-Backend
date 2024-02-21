@@ -1,4 +1,4 @@
-import { loginController } from "../controllers/login";
+import { loginController } from "../controllers/user/login.js";
 import { signToken } from "../controllers/token/token";
 
 const res = {
