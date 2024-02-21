@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
 import { blogger, commentpost, savepost,addpost,addtitlepicture } from "../controllers/dekhor/adddek.js";
-import { countlike, detailpost, posttocategory, showcomment, showsave,posttoprofile ,searchblog ,searchblogger,getprofile} from "../controllers/dekhor/getdek.js";
+import { countlike, detailpost, posttocategory, showcomment, showsave,posttoprofile ,searchblog ,searchblogger} from "../controllers/dekhor/getdek.js";
 import { unlike,deletepost } from "../controllers/dekhor/deldek.js";
 import {getrandompost} from "../controllers/dekhor/getrandompost.js";
 
@@ -36,8 +36,6 @@ router.get("/posttoprofile",posttoprofile); //test success // connect ?? image a
 router.get("/posttocategory",posttocategory); // test success
 
 router.get("/detailpost",detailpost); //test success
-
-router.get("/getprofile",getprofile);
 
 // router.get("/nameprofile", async (req, res) => {
 //     const {id} = req.query;
