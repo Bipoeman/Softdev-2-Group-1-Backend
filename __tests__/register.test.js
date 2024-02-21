@@ -1,4 +1,4 @@
-import { registerController } from "../controllers/register";
+import { registerController } from "../controllers/user/register.js";
 
 const res = {
     status: jest.fn().mockReturnThis(),

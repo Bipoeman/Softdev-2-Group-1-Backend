@@ -1,6 +1,6 @@
-import { signToken } from "./token/token.js";
+import { signToken } from "../token/token.js";
 import bcrypt from "bcryptjs";
-import supabase from "./database/database.js";
+import supabase from "../database/database.js";
 
 
 export const loginController = async (req, res) => {

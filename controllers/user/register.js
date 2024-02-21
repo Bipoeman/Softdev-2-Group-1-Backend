@@ -1,4 +1,4 @@
-import supabase from "./database/database.js";
+import supabase from "../database/database.js";
 import bcrypt from "bcryptjs";
 
 export const registerController = async (req, res) => {
