@@ -27,7 +27,7 @@ export const showcomment = async (req, res) => {
     }
 }
 
-export const showlike = async (req, res) => {
+export const showsave = async (req, res) => {
     const id_user = decodeToken(req.headers.authorization).userId;
     const { data, error } = await supabase
         .from('dekhor_savepost')
@@ -93,3 +93,38 @@ export const detailpost = async (req, res) => {
 //         res.status(200).json(data);
 //     }
 // }
+export const searchblog = async (req,res)=> {
+    const {data,error} = await supabase.from("dekhor_post").select('id_post,title, category, image_link, user:public_dekhor_post_id_user_fkey(fullname)') 
+    if (error){
+        console.log(error)
+        res.status(400).json(error);
+    }
+    else{
+        res.status(200).json(data);
+    }
+}
+
+export const searchblogger = async (req,res)=> {
+    const {data,error} = await supabase.from("blogger").select('user:public_dekhor_post_id_user_fkey(fullname)') 
+    if (error){
+        console.log(error)
+        res.status(400).json(error);
+    }
+    else{
+        res.status(200).json(data);
+    }
+}
+
+export const getprofile = async (req,res) =>{
+    const id_user = req.params;
+    const { data: {user}, error } = await supabase.from("user_info").select('fullname').eq("id_user",id_user);
+    if (error){
+        res.status(500).json(error);
+    }
+    else{
+        res.status(200).json({
+            email: user.email,
+            user_metadata: user.user_metadata
+        });
+    }
+}
