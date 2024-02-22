@@ -32,12 +32,22 @@ export const getbinbyuserid = async (req,res)=>{
     }
 };
 
-export const searchbin = async (req,res)=>{
-    const {locationsordescription} = req.body;
-    const {data,error} = await supabase.schema("pinthebin")
-        .from("bin_info")
-        .select("*")
-        .or(`location.like.${locationsordescription}`,`description.like.${locationsordescription}`);
-    if (error) throw error;
-    else{res.send(data)}
+export const searchbin = async (req, res) => {
+    const { findtext } = req.params;
+    try {
+        const { data, error } = await supabase
+            .from("bin_info")
+            .select("*")
+            .or(`location.ilike.%${findtext}%,description.ilike.%${findtext}%`);
+
+        if (error) {
+            res.status(500).send(error);
+        } else if (!data || data.length === 0) {
+            res.status(404).send("Bin not found");
+        } else {
+            res.send(data);
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 };

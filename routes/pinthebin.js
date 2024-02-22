@@ -16,11 +16,12 @@ router.get("", (req, res) => {
 
 router.get("/bin",getbin)
 
+router.get("/find",searchbin)
+
 router.get("/bin/:id",getbinbyid )
 
 router.get("/mybin",getbinbyuserid)
 
-router.get("/bin/search",searchbin)
 //add bin_info
 router.post("/bin", addbin);
 
