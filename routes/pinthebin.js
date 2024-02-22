@@ -1,11 +1,12 @@
 import express from "express";
-import {getbin, getbinbyid, getbinbyuserid, searchbin} from "../controllers/pinthebin/getbin.js";
+import {getbin, getbinbyid, getbinbyuserid } from "../controllers/pinthebin/getbin.js";
 import {addbin, addpictureController} from "../controllers/pinthebin/addbin.js";
 import {updatebin} from "../controllers/pinthebin/updatebin.js";
 import multer from "multer";
 import {getbinreport} from "../controllers/pinthebin/getbinreport.js";
 import {deletebin} from "../controllers/pinthebin/deletebin.js";
 import {addbinreport} from "../controllers/pinthebin/addbinreport.js";
+import {findbinlike} from "../controllers/pinthebin/findbinlike.js";
 
 const uploadpicture = multer();
 const router = express.Router();
@@ -16,7 +17,7 @@ router.get("", (req, res) => {
 
 router.get("/bin",getbin)
 
-router.get("/find",searchbin)
+router.get("/find",findbinlike)
 
 router.get("/bin/:id",getbinbyid )
 
