@@ -9,26 +9,26 @@ export const uploadprofilecontroller = async (req, res) => {
     const {data, error} = await supabase.from("user_info").select("profile").eq("id", id);
     if (error) throw error;
     else if (data[0].profile === null) {
-        const {data: datapicture, err} = await supabase.storage.from("profile").upload(newfilename, file.buffer, {
+        const {data: datapicture, error} = await supabase.storage.from("profile").upload(newfilename, file.buffer, {
             contentType: newminetype
         });
-        if (err) throw err;
+        if (error) {res.status(500).send(error)}
         else {
             const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
             const {
                 data,
-                err
+                error
             } = await supabase.from("user_info").update({profile: url}).eq("id", id).select();
-            if (err) throw err;
+            if (error) {res.status(500).send(error)}
             else {
                 res.send(data);
             }
         }
     } else {
-        const {data, err} = await supabase.storage.from("profile").update(newfilename, file.buffer, {
+        const {data, error} = await supabase.storage.from("profile").update(newfilename, file.buffer, {
             contentType: newminetype
         });
-        if (err) throw err;
+        if (error) {res.status(500).send(error)}
         else {
             res.send(data)
         }

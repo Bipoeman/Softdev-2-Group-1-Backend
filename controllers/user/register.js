@@ -13,7 +13,7 @@ export const registerController = async (req, res) => {
                 .insert([
                     { email, fullname, username, password:hashedPassword }
                 ]);
-            if (error) throw error;
+            if (error) {res.status(500).send(error)}
             else {
                 res.send("user created");
             }
