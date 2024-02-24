@@ -12,8 +12,8 @@ const router = express.Router();
 
 // all that is path  url/user
 router.get("", async (req, res) => {
-    const {data, err} = await supabase.from("user_info").select("*");
-    if (err) throw err;
+    const {data, error} = await supabase.from("user_info").select("*");
+    if (error) {res.status(500).send(error)} 
     else{
         res.send(data)
     }
@@ -22,8 +22,8 @@ router.get("", async (req, res) => {
 
 router.get("/id", async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
-    const {data, err} = await supabase.from("user_info").select("*").eq("id", id);
-    if (err) throw err;
+    const {data, error} = await supabase.from("user_info").select("*").eq("id", id);
+    if (error) {res.status(500).send(error)} 
     else{
         if(data.length === 0){
             res.status(404).send("user not found")
