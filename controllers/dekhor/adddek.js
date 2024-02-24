@@ -3,9 +3,32 @@ import {decodeToken} from "../token/token.js";
 
 export const addpost = async (req, res) => {
     const id_user = decodeToken(req.headers.authorization).userId;
-    const {id_post,title,content,category,image_link} = req.body;
+    const {id_post,title,content,category,image_link,fullname} = req.body;
     const { data, error } = await supabase
             .from("dekhor_post") 
+            .insert({
+                id_post,
+                title,
+                content,
+                category,
+                image_link,
+                fullname,
+                id_user,
+            });
+    if (error){
+        res.status(500).json({ msg: error.message });
+    }
+    else{
+        res.status(200).json(data);
+
+    }
+};
+
+export const draftpost = async (req, res) => {
+    const id_user = decodeToken(req.headers.authorization).userId;
+    const {id_post,title,content,category,image_link} = req.body;
+    const { data, error } = await supabase
+            .from("dekhor_draft") 
             .insert({
                 id_post,
                 title,
@@ -60,8 +83,22 @@ export const addtitlepicture = async (req, res) => {
 
 export const savepost = async (req,res) =>{
     const id_user = decodeToken(req.headers.authorization).userId;
-    const {id_post} = req.query;
-    const {data,error} = await supabase.from("dekhor_savepost").insert({id_user,id_post})
+    const {id_post} = req.params;
+    const {fullname,fullname_blogger} = req.body;
+    const {data,error} = await supabase.from("dekhor_savepost").insert({id_user,id_post,fullname,fullname_blogger})
+    if (error ){
+        res.status(500).json(error);
+    }
+    else{
+        console.log(data);
+        res.status(200).json(data);
+    }
+}
+
+export const numsave = async (req,res) =>{
+    const {id_post} = req.params;
+    const {save} = req.body;
+    const {data,error} = await supabase.from("dekhor_post").update({save}).eq("id_post",id_post)
     if (error ){
         res.status(500).json(error);
     }
@@ -103,3 +140,4 @@ export const searchblog = async (req,res)=> {
         res.status(200).json(data);
     }
 }
+

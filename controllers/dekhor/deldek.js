@@ -12,9 +12,9 @@ export const deletepost = async (req,res)=>{
     }
 }
 
-export const unlike = async (req,res)=>{
+export const unsave = async (req,res)=>{
     const id_user = decodeToken(req.headers.authorization).userId;
-    const {id_post} = req.query;
+    const {id_post} = req.params;
     const {error} = await supabase.from("dekhor_savepost").delete().eq('id_user',id_user).eq('id_post',id_post)
     if (error){
         res.status(500).json(error);
