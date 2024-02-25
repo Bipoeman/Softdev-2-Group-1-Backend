@@ -2,7 +2,7 @@ import supabase from "../database/database.js";
 import {decodeToken} from "../token/token.js";
 
 export const deletepost = async (req,res)=>{
-    const {id_post} = req.query;
+    const {id_post} = req.params;
     const {error} = await supabase.from("dekhor_post").delete().eq('id_post', id_post)
     if (error){
         res.status(500).json(error);
@@ -23,3 +23,4 @@ export const unsave = async (req,res)=>{
         res.status(200).json({msg:"success"})
     }
 }
+

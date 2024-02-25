@@ -24,6 +24,31 @@ export const addpost = async (req, res) => {
     }
 };
 
+export const editpost = async (req, res) => {
+    const id_user = decodeToken(req.headers.authorization).userId;
+    const {id_post} = req.params;
+    const {title,content,category,image_link,fullname} = req.body;
+    const { data, error } = await supabase
+            .from("dekhor_post") 
+            .update({
+                id_post,
+                title,
+                content,
+                category,
+                image_link,
+                fullname,
+                id_user,
+            })
+            .eq("id_post",id_post);
+    if (error){
+        res.status(500).json({ msg: error.message });
+    }
+    else{
+        res.status(200).json(data);
+
+    }
+};
+
 export const draftpost = async (req, res) => {
     const id_user = decodeToken(req.headers.authorization).userId;
     const {id_post,title,content,category,image_link} = req.body;
@@ -107,6 +132,7 @@ export const numsave = async (req,res) =>{
         res.status(200).json(data);
     }
 }
+
 
 export const commentpost = async (req,res) =>{
     const id_user = decodeToken(req.headers.authorization).userId;

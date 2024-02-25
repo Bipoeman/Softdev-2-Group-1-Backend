@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
-import { blogger, commentpost, savepost, numsave, addpost, addtitlepicture } from "../controllers/dekhor/adddek.js";
+import { blogger, commentpost, savepost, numsave, addpost,editpost, addtitlepicture } from "../controllers/dekhor/adddek.js";
 import { countsave, detailpost, posttocategory, showcomment, showsave, posttoprofile, searchblog, searchblogger, showsaveblogger, posttoprofileblogger } from "../controllers/dekhor/getdek.js";
 import { unsave, deletepost } from "../controllers/dekhor/deldek.js";
 import { getrandompost } from "../controllers/dekhor/getrandompost.js";
@@ -12,10 +12,12 @@ const router = express.Router();
 
 router.post("/createpost", addpost); // test success
 
+router.put("/editpost/:id_post", editpost);
+
 // รูปภาพของ post
 router.post("/upload", uploadtitlepicture.single("file"), addtitlepicture); // test พร้อม createpost ??
 
-router.delete("/deletepost", deletepost); // test success
+router.delete("/deletepost/:id_post", deletepost); // test success
 
 router.post("/savepost/:id_post", savepost); // test success
 
