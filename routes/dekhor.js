@@ -1,8 +1,8 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
-import { blogger, commentpost, savepost, numsave, addpost,editpost, addtitlepicture } from "../controllers/dekhor/adddek.js";
-import { countsave, detailpost, posttocategory, showcomment, showsave, posttoprofile, searchblog, searchblogger, showsaveblogger, posttoprofileblogger } from "../controllers/dekhor/getdek.js";
+import { blogger, commentpost, savepost, numsave, addpost,editpost, addtitlepicture,draftpost } from "../controllers/dekhor/adddek.js";
+import { countsave, detailpost, posttocategory, showcomment, showsave, posttoprofile,posttodraft, searchblog, searchblogger, showsaveblogger, posttoprofileblogger } from "../controllers/dekhor/getdek.js";
 import { unsave, deletepost } from "../controllers/dekhor/deldek.js";
 import { getrandompost } from "../controllers/dekhor/getrandompost.js";
 
@@ -11,6 +11,10 @@ const uploadtitlepicture = multer();
 const router = express.Router();
 
 router.post("/createpost", addpost); // test success
+
+router.post("/draftpost", draftpost);
+
+router.get("/posttodraft", posttodraft);
 
 router.put("/editpost/:id_post", editpost);
 

@@ -51,7 +51,7 @@ export const editpost = async (req, res) => {
 
 export const draftpost = async (req, res) => {
     const id_user = decodeToken(req.headers.authorization).userId;
-    const {id_post,title,content,category,image_link} = req.body;
+    const {id_post,title,content,category,image_link,fullname} = req.body;
     const { data, error } = await supabase
             .from("dekhor_draft") 
             .insert({
@@ -60,6 +60,7 @@ export const draftpost = async (req, res) => {
                 content,
                 category,
                 image_link,
+                fullname,
                 id_user,
             });
     if (error){

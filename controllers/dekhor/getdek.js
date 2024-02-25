@@ -72,6 +72,21 @@ export const posttoprofile = async (req, res) => {
     }
 }
 
+export const posttodraft = async (req, res) => {
+    const id_user = decodeToken(req.headers.authorization).userId;
+    const { data, error } = await supabase
+        .from("dekhor_draft")
+        .select('id_draft,title, category, image_link, user:public_dekhor_draft_id_user_fkey(fullname)')
+        .eq("id_user", id_user);
+
+    if (error) {
+        console.log(error);
+        res.status(400).json(error);
+    } else {
+        res.status(200).json(data);
+    }
+}
+
 export const posttoprofileblogger = async (req, res) => {
     const fullname = req.params.fullname;
     const { data, error } = await supabase
