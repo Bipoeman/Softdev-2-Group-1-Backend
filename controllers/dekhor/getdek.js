@@ -129,6 +129,20 @@ export const detailpost = async (req, res) => {
     }
 }
 
+export const detaildraft = async (req, res) => {
+    const { id_draft } = req.params;
+    const { data, error } = await supabase.from("dekhor_draft")
+        .select('id_draft,title,content, category, image_link, user:public_dekhor_draft_id_user_fkey(fullname)')
+        .eq("id_draft", id_draft)
+    if (error) {
+        console.log(data)
+        res.status(400).json(error);
+    }
+    else {
+        res.status(200).json(data);
+    }
+}
+
 export const searchblog = async (req,res)=> {
     const {data,error} = await supabase.from("dekhor_post").select('id_post,title, category, image_link,save, user:public_dekhor_post_id_user_fkey(fullname)') 
     if (error){
