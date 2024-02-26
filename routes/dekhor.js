@@ -1,16 +1,16 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
-import { blogger, commentpost, savepost, numsave, addpost, editpost,editdraft, addtitlepicture, draftpost } from "../controllers/dekhor/adddek.js";
+import { blogger, commentpost, savepost, numsave, addpost, editpost, editdraft, addtitlepicture, updatetitlepicture, draftpost } from "../controllers/dekhor/adddek.js";
 import { countsave, detailpost, detaildraft, posttocategory, showcomment, showsave, posttoprofile, posttodraft, searchblog, searchblogger, showsaveblogger, posttoprofileblogger } from "../controllers/dekhor/getdek.js";
-import { unsave, deletepost , deletedraft } from "../controllers/dekhor/deldek.js";
+import { unsave, deletepost, deletedraft } from "../controllers/dekhor/deldek.js";
 import { getrandompost } from "../controllers/dekhor/getrandompost.js";
 
 const uploadtitlepicture = multer();
 
 const router = express.Router();
 
-router.post("/createpost", addpost); // test success
+router.post("/createpost", uploadtitlepicture.single("file"), addpost); // test success
 
 router.post("/draftpost", draftpost);
 
@@ -21,7 +21,9 @@ router.put("/editpost/:id_post", editpost);
 router.put("/editdraft/:id_draft", editdraft);
 
 // รูปภาพของ post
-router.post("/upload", uploadtitlepicture.single("file"), addtitlepicture); // test พร้อม createpost ??
+router.post("/upload/:id_post", uploadtitlepicture.single("file"), addtitlepicture); // test พร้อม createpost ??
+
+router.put("/updatepicture/:id_post", uploadtitlepicture.single("file"), updatetitlepicture);
 
 router.delete("/deletepost/:id_post", deletepost); // test success
 
