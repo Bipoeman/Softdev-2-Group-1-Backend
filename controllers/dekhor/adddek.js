@@ -26,7 +26,7 @@ export const addpost = async (req, res) => {
             title,
             content,
             category,
-            image_link, // Save the URL of the uploaded file to the database
+            image_link,
             fullname,
             id_user
         });
@@ -83,6 +83,28 @@ export const editdraft = async (req, res) => {
                 id_user,
             })
             .eq("id_draft",id_draft);
+    if (error){
+        res.status(500).json({ msg: error.message });
+    }
+    else{
+        res.status(200).json(data);
+
+    }
+};
+
+export const report = async (req, res) => {
+    const id_user = decodeToken(req.headers.authorization).userId;
+    const {id_post} = req.params;
+    const {title,reason} = req.body;
+    const { data, error } = await supabase
+            .from("dekhor_post") 
+            .insert({
+                id_post,
+                title,
+                reason,
+                id_user,
+            })
+            .eq("id_post",id_post);
     if (error){
         res.status(500).json({ msg: error.message });
     }
