@@ -45,5 +45,5 @@ router.put("/changepassword",changepassword);
 router.put("/resetpassword",resetpassword)
 
 
-router.put("/renew",renewtoken)
+router.get("/renew",renewtoken)
 export default router;
