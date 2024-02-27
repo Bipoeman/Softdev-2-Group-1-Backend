@@ -12,7 +12,7 @@ export const supportControlloer = async (req, res) => {
             contact,
             finished
         });
-    if (error) {res.status(500).send(error)}
+    if (error) {res.send(error)}
     else{
         res.send(data);
     }

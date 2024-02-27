@@ -11,7 +11,7 @@ export const updatebin = async (req,res) => {
             user_update:user_id
         }
     ]).eq("latitude",latitude).eq("longitude",longitude).select("*");
-    if (error) {res.status(500).send(error)}
+    if (error) throw error;
     else {
         res.send(data);
     }

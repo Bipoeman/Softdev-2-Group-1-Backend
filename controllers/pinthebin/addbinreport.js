@@ -13,7 +13,7 @@ export const addbinreport = async (req, res) => {
             user_report:userId
         }])
         .select();
-    if (error) {res.status(500).send(error)}
+    if (error) throw error;
     else{
         res.send(data);
     }
