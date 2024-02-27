@@ -6,6 +6,7 @@ import multer from "multer";
 import {changeprofile} from "../controllers/user/changeprofile.js";
 import {changepassword} from "../controllers/user/changepassword.js";
 import {resetpassword} from "../controllers/user/resetpassword.js";
+import {renewtoken} from "../controllers/user/renewtoken.js";
 
 const uploadprofile = multer();
 const router = express.Router();
@@ -42,4 +43,7 @@ router.put("",changeprofile);
 router.put("/changepassword",changepassword);
 
 router.put("/resetpassword",resetpassword)
+
+
+router.put("/renew",renewtoken)
 export default router;
