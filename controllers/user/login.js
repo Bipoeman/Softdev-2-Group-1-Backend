@@ -20,7 +20,7 @@ export const loginController = async (req, res) => {
             if (validPassword) {
                 const accesssjwt = accesssigntoken(user.id,user.role);
                 const refreshjwt = refeshsigntoken(user.id,user.role);
-                res.json(accesssjwt,refreshjwt)
+                res.json({accesssjwt,refreshjwt})
             }
             else {
                 res.status(400).json({ error: true, message: "invalid password" });
