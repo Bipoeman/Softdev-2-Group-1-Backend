@@ -4,14 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const addpost = async (req, res) => {
     try {
-        // Decode the user ID from the 'authorization' header of the request
-        const id_user = decodeToken(req.headers.authorization).userId;
-        
+        const id_user = decodeToken(req.headers.authorization).userId; 
         const { title, content, category, fullname } = req.body;
-
         const file = req.file;
         const newminetype = "image/jpeg";
-        const newfilename = `dekhorblog_${uuidv4()}.jpeg`; // Generate a unique filename using uuidv4
+        const newfilename = `dekhorblog_${uuidv4()}.jpeg`;
         const { data: uploadData, error: uploadError } = await supabase.storage
             .from("dekhor")
             .upload(newfilename, file.buffer, {
@@ -39,58 +36,128 @@ export const addpost = async (req, res) => {
     }
 };
 
-
-
-
 export const editpost = async (req, res) => {
-    const id_user = decodeToken(req.headers.authorization).userId;
-    const {id_post} = req.params;
-    const {title,content,category,image_link,fullname} = req.body;
-    const { data, error } = await supabase
-            .from("dekhor_post") 
-            .update({
-                id_post,
-                title,
-                content,
-                category,
-                image_link,
-                fullname,
-                id_user,
-            })
-            .eq("id_post",id_post);
-    if (error){
+    try {
+        const id_user = decodeToken(req.headers.authorization).userId; 
+        const {id_post} = req.params;
+        const { title, content, category, fullname } = req.body;
+        const file = req.file;
+        const newminetype = "image/jpeg";
+        const newfilename = `dekhorblog_${uuidv4()}.jpeg`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from("dekhor")
+            .upload(newfilename, file.buffer, {
+                contentType: newminetype
+            });
+
+        if (uploadError) throw uploadError;
+
+        const image_link = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${uploadData.fullPath}`;
+
+        const { data: postData, error: postError } = await supabase.from("dekhor_post").update({
+            title,
+            content,
+            category,
+            image_link,
+            fullname,
+            id_user
+        }).eq("id_post", id_post);
+
+        if (postError) throw postError;
+
+        res.status(200).json(postData);
+    } catch (error) {
         res.status(500).json({ msg: error.message });
     }
-    else{
-        res.status(200).json(data);
-
-    }
 };
+
+
+
+
+// export const editpost = async (req, res) => {
+//     const id_user = decodeToken(req.headers.authorization).userId;
+//     const {id_post} = req.params;
+//     const {title,content,category,image_link,fullname} = req.body;
+//     const { data, error } = await supabase
+//             .from("dekhor_post") 
+//             .update({
+//                 id_post,
+//                 title,
+//                 content,
+//                 category,
+//                 image_link,
+//                 fullname,
+//                 id_user,
+//             })
+//             .eq("id_post",id_post);
+//     if (error){
+//         res.status(500).json({ msg: error.message });
+//     }
+//     else{
+//         res.status(200).json(data);
+
+//     }
+// };
 
 export const editdraft = async (req, res) => {
-    const id_user = decodeToken(req.headers.authorization).userId;
-    const {id_draft} = req.params;
-    const {title,content,category,image_link,fullname} = req.body;
-    const { data, error } = await supabase
-            .from("dekhor_draft") 
-            .update({
-                id_draft,
-                title,
-                content,
-                category,
-                image_link,
-                fullname,
-                id_user,
-            })
-            .eq("id_draft",id_draft);
-    if (error){
+    try {
+        const id_user = decodeToken(req.headers.authorization).userId; 
+        const {id_post} = req.params;
+        const { title, content, category, fullname } = req.body;
+        const file = req.file;
+        const newminetype = "image/jpeg";
+        const newfilename = `dekhorblog_${uuidv4()}.jpeg`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from("dekhor")
+            .upload(newfilename, file.buffer, {
+                contentType: newminetype
+            });
+
+        if (uploadError) throw uploadError;
+
+        const image_link = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${uploadData.fullPath}`;
+
+        const { data: postData, error: postError } = await supabase.from("dekhor_draft").update({
+            title,
+            content,
+            category,
+            image_link,
+            fullname,
+            id_user
+        }).eq("id_post", id_post);
+
+        if (postError) throw postError;
+
+        res.status(200).json(postData);
+    } catch (error) {
         res.status(500).json({ msg: error.message });
     }
-    else{
-        res.status(200).json(data);
-
-    }
 };
+
+// export const editdraft = async (req, res) => {
+//     const id_user = decodeToken(req.headers.authorization).userId;
+//     const {id_draft} = req.params;
+//     const {title,content,category,image_link,fullname} = req.body;
+//     const { data, error } = await supabase
+//             .from("dekhor_draft") 
+//             .update({
+//                 id_draft,
+//                 title,
+//                 content,
+//                 category,
+//                 image_link,
+//                 fullname,
+//                 id_user,
+//             })
+//             .eq("id_draft",id_draft);
+//     if (error){
+//         res.status(500).json({ msg: error.message });
+//     }
+//     else{
+//         res.status(200).json(data);
+
+//     }
+// };
 
 export const report = async (req, res) => {
     const id_user = decodeToken(req.headers.authorization).userId;
@@ -115,25 +182,36 @@ export const report = async (req, res) => {
 };
 
 export const draftpost = async (req, res) => {
-    const id_user = decodeToken(req.headers.authorization).userId;
-    const {id_post,title,content,category,image_link,fullname} = req.body;
-    const { data, error } = await supabase
-            .from("dekhor_draft") 
-            .insert({
-                id_post,
-                title,
-                content,
-                category,
-                image_link,
-                fullname,
-                id_user,
+    try {
+        const id_user = decodeToken(req.headers.authorization).userId; 
+        const { title, content, category, fullname } = req.body;
+        const file = req.file;
+        const newminetype = "image/jpeg";
+        const newfilename = `dekhorblog_${uuidv4()}.jpeg`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from("dekhor")
+            .upload(newfilename, file.buffer, {
+                contentType: newminetype
             });
-    if (error){
-        res.status(500).json({ msg: error.message });
-    }
-    else{
-        res.status(200).json(data);
 
+        if (uploadError) throw uploadError;
+
+        const image_link = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${uploadData.fullPath}`;
+
+        const { data: postData, error: postError } = await supabase.from("dekhor_draft").insert({
+            title,
+            content,
+            category,
+            image_link,
+            fullname,
+            id_user
+        });
+
+        if (postError) throw postError;
+
+        res.status(200).json(postData);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
     }
 };
 
