@@ -18,7 +18,7 @@ export const refreshtoken = (req,res) => {
             const role = decode.role;
             // check user is valid
             const accesssjwt = accesssigntoken(userid,role);
-            const refreshjwt = refeshsigntoken(user.id,user.role);
+            const refreshjwt = refeshsigntoken(userid,role);
             res.json({accesssjwt,refreshjwt})
         }
     })
