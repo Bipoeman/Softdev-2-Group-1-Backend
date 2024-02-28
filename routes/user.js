@@ -7,6 +7,7 @@ import {resetpassword} from "../controllers/user/resetpassword.js";
 import {refreshtoken} from "../controllers/token/refreshaccesstoken.js";
 import {getuserdata} from "../controllers/user/getuserdata.js";
 import {getuserdatabyid} from "../controllers/user/getuserdatabyid.js";
+import {validaccesstoken} from "../controllers/token/validaccesstoken.js";
 
 
 const uploadprofile = multer();
@@ -16,14 +17,14 @@ const router = express.Router();
 router.get("", getuserdata);
 
 
-router.get("/id", getuserdatabyid);
+router.get("/id",validaccesstoken, getuserdatabyid);
 
-router.post("/upload",uploadprofile.single("file"),uploadprofilecontroller);
+router.post("/upload",validaccesstoken,uploadprofile.single("file"),uploadprofilecontroller);
 
-router.put("",changeprofile);
+router.put("",validaccesstoken,changeprofile);
 
 
-router.put("/changepassword",changepassword);
+router.put("/changepassword",validaccesstoken,changepassword);
 
 router.put("/resetpassword",resetpassword)
 

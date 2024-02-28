@@ -17,26 +17,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-
-let authorized_path = ["/user/upload","/support"];
-
-
-app.use((req, res, next) => {
-    if (authorized_path.includes(req.path)) {
-        console.log("Header: ", req.headers.authorization);
-        const result = verifyToken(req.headers.authorization);
-        if (result === true) {
-            console.log("Token is valid");
-            next();
-        }
-        else {
-            res.status(401).end();
-        }
-    } else {
-        next();
-    }
-});
-
 app.use("/login", login);
 app.use("/register", register);
 app.use("/user", user);

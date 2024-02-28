@@ -7,6 +7,7 @@ import {getbinreport} from "../controllers/pinthebin/getbinreport.js";
 import {deletebin} from "../controllers/pinthebin/deletebin.js";
 import {addbinreport} from "../controllers/pinthebin/addbinreport.js";
 import {findbinlike} from "../controllers/pinthebin/findbinlike.js";
+import {validaccesstoken} from "../controllers/token/validaccesstoken.js";
 
 const uploadpicture = multer();
 const router = express.Router();
@@ -21,24 +22,24 @@ router.get("/find",findbinlike)
 
 router.get("/bin/:id",getbinbyid )
 
-router.get("/mybin",getbinbyuserid)
+router.get("/mybin",validaccesstoken,getbinbyuserid)
 
 //add bin_info
-router.post("/bin", addbin);
+router.post("/bin",validaccesstoken, addbin);
 
 // add picture to bin_info
 
 router.post("/bin/upload",uploadpicture.single("file"),addpictureController);
 
 //update bin_info
-router.put("/bin", updatebin);
+router.put("/bin",validaccesstoken, updatebin);
 
 // delete bin_info
 router.delete("/bin/:id",deletebin);
 //show bin report
 router.get("/report",getbinreport);
 
-router.post("/report",addbinreport); //add report
+router.post("/report",validaccesstoken,addbinreport); //add report
 
 // last 3 is app report is portal app report
 
