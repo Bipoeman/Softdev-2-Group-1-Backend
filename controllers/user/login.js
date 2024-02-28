@@ -18,9 +18,9 @@ export const loginController = async (req, res) => {
             const user = data[0];
             const validPassword = await bcrypt.compare(password, user.password);
             if (validPassword) {
-                const accesssjwt = accesssigntoken(user.id,user.role);
+                const accessjwt = accesssigntoken(user.id,user.role);
                 const refreshjwt = refeshsigntoken(user.id,user.role);
-                res.json({accesssjwt,refreshjwt})
+                res.json({accessjwt,refreshjwt})
             }
             else {
                 res.status(400).json({ error: true, message: "invalid password" });

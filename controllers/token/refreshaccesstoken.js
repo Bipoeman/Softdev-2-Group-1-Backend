@@ -12,7 +12,7 @@ export const refreshtoken = (req,res) => {
     jwt.verify(token,refreshsecretKey,async (err, decode) => {
         if (err) {
             res.status(403).json({
-                msg: "go to login page 101 "
+                msg: "go to login page "
             })
         } else {
             const userid = decode.userId;
@@ -24,9 +24,9 @@ export const refreshtoken = (req,res) => {
                 msg: "go to login page"
             })}
             else {
-                const accesssjwt = accesssigntoken(userid, role);
+                const accessjwt = accesssigntoken(userid, role);
                 const refreshjwt = refeshsigntoken(userid, role);
-                res.json({accesssjwt, refreshjwt})
+                res.json({accessjwt, refreshjwt})
             }
         }
     })
