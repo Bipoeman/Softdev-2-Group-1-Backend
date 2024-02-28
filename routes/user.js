@@ -6,6 +6,7 @@ import multer from "multer";
 import {changeprofile} from "../controllers/user/changeprofile.js";
 import {changepassword} from "../controllers/user/changepassword.js";
 import {resetpassword} from "../controllers/user/resetpassword.js";
+import {refreshtoken} from "../controllers/token/refreshaccesstoken.js";
 
 
 const uploadprofile = multer();
@@ -45,5 +46,5 @@ router.put("/changepassword",changepassword);
 router.put("/resetpassword",resetpassword)
 
 
-router.get("/renew",)
+router.get("/refresh",refreshtoken)
 export default router;
