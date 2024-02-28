@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 
 config();
-const secretKey = process.env.secretKey
+const acesssecretKey = process.env.acesssecretKey
+const refreshsecretKey = process.env.refreshsecretKey
 
 export const verifyToken = (rawToken) => {
     if (!rawToken) {
@@ -14,7 +15,7 @@ export const verifyToken = (rawToken) => {
     const token = rawToken.split(" ")[1];
     console.log(token)
 
-    jwt.verify(token, secretKey, (err, decoded) => {
+    jwt.verify(token, acesssecretKey, (err, decoded) => {
         if (err) {
             console.log('Invalid token', err);
 
@@ -26,12 +27,16 @@ export const verifyToken = (rawToken) => {
     return authorized;
 };
 
-export const signToken = (id, role) =>{
-    return jwt.sign({userId: id, role: role}, secretKey, {expiresIn: '1h'});
+export const accesssigntoken = (id, role) =>{
+    return jwt.sign({userId: id, role: role}, acesssecretKey, {expiresIn: '1h'});
 }
 
+
+export const refeshsigntoken = (id,role) =>{
+    return jwt.sign({userId: id, role: role}, refreshsecretKey, {expiresIn: '1d'})
+}
 export const decodeToken = (token) =>{
     const raw = token.split(" ")[1];
-    return  jwt.verify(raw, secretKey);
+    return  jwt.verify(raw, acesssecretKey);
 
 }
