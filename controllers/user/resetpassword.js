@@ -17,7 +17,7 @@ export const resetpassword = async (req, res) => {
         res.status(400).json({error: true, message: "user does not exist"});
     } else {
         // logic reset password
-        const newpass = generateRandomPassword(12);
+        const newpass = generateRandomPassword(6);
         const response = await mailsender(datauser[0].email, newpass);
         if (response) {
             const hashedPassword = bcrypt.hashSync(newpass, 10);
@@ -54,7 +54,7 @@ const mailsender = async (email, newpass) => {
         },
         to: [email],
         subject: 'Sending Email using Node.js',
-        text: `it new password for your account is  ${newpass}  , please change it after login.`
+        text: `it OTP for your account is  ${newpass}  , please change it after login.`
     };
     console.log("try to send email")
     try {
@@ -69,7 +69,7 @@ const mailsender = async (email, newpass) => {
 
 function generateRandomPassword(length) {
     // Define allowed characters for the password
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+{}|:<>?-=[];,./";
+    const charset = "0123456789";
 
     let password = '';
     for (let i = 0; i < length; i++) {
