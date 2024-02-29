@@ -41,18 +41,4 @@ export const getbinbyuserid = async (req, res) => {
   }
 };
 
-export const searchbin = async (req, res) => {
-  const { locationsordescription } = req.body;
-  const { data, error } = await supabase
-    .schema("pinthebin")
-    .from("bin_info")
-    .select("*")
-    .or(
-      `location.like.${locationsordescription}`,
-      `description.like.${locationsordescription}`
-    );
-  if (error) throw error;
-  else {
-    res.send(data);
-  }
-};
+

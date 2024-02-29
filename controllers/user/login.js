@@ -1,4 +1,4 @@
-import { signToken } from "../token/token.js";
+import {accesssigntoken, refeshsigntoken} from "../token/token.js";
 import bcrypt from "bcryptjs";
 import supabase from "../database/database.js";
 
@@ -18,7 +18,9 @@ export const loginController = async (req, res) => {
             const user = data[0];
             const validPassword = await bcrypt.compare(password, user.password);
             if (validPassword) {
-                res.status(200).send(signToken(user.id, user.role));
+                const accessjwt = accesssigntoken(user.id,user.role);
+                const refreshjwt = refeshsigntoken(user.id,user.role);
+                res.json({accessjwt,refreshjwt})
             }
             else {
                 res.status(400).json({ error: true, message: "invalid password" });
