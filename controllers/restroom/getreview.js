@@ -6,8 +6,9 @@ export const getreview = async (req, res) => {
     .from("toilet_comment")
     .select("*")
     .eq("name_toilet", name);
-  if (error) throw error;
-  else {
+  if (error) {
+    res.status(500).send(error);
+  } else {
     let newavgstar = 0;
     for (let i = 0; i < data.length; i++) {
       newavgstar = (data[i].star + newavgstar * i) / (i + 1);

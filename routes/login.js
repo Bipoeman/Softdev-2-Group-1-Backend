@@ -1,5 +1,6 @@
 import express from "express";
-import { loginController } from "../controllers/login.js";
+import { loginController } from "../controllers/user/login.js";
+import supabase from "../controllers/database/database.js";
 
 const router = express.Router();
 
@@ -15,7 +16,15 @@ router.get("/text",(req, res)=>{
 
 router.post("",loginController);
 
+router.get("/playground", async (req, res) => {
+    const {data, error} = await supabase.storage.listBuckets();
+    if (error) {
+        res.status(500).send(error);}
+    else {
+        res.status(200).send(data);
+    }
 
+});
 
 
 export default router;

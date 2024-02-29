@@ -7,8 +7,9 @@ export const addtoilet = async (req, res) => {
     .select("*")
     .eq("latitude", latitude)
     .eq("longitude", longitude);
-  if (error) throw error;
-  else {
+  if (error) {
+    res.status(500).send(error);
+  } else {
     if (data.length === 0) {
       const { data, error } = await supabase
         .from("toilet_info")
@@ -22,8 +23,9 @@ export const addtoilet = async (req, res) => {
           },
         ])
         .select();
-      if (error) throw error;
-      else {
+      if (error) {
+        res.status(500).send(error);
+      } else {
         res.send(data);
       }
     } else {

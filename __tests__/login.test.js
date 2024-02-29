@@ -1,5 +1,5 @@
-import { loginController } from "../controllers/login";
-import { signToken } from "../controllers/token/token";
+import { loginController } from "../controllers/user/login.js";
+import { accesssigntoken } from "../controllers/token/token";
 
 const res = {
     status: jest.fn().mockReturnThis(),
@@ -25,7 +25,7 @@ it('should return login success', () => {
 
     loginController(req, res);
 
-    expect(res.send).toHaveBeenCalledWith(signToken(2, "admin"));
+    expect(res.send).toHaveBeenCalledWith(accesssigntoken(2, "admin"));
 });
 
 it('should return login fail', () => {
