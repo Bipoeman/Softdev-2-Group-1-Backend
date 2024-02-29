@@ -22,9 +22,6 @@ router.put("/editpost/:id_post", uploadtitlepicture.single("file"), editpost);
 
 router.put("/editdraft/:id_draft", uploadtitlepicture.single("file"), editdraft);
 
-// รูปภาพของ post
-router.post("/upload/:id_post", uploadtitlepicture.single("file"), addtitlepicture); // test พร้อม createpost ??
-
 router.put("/updatepicture/:id_post", uploadtitlepicture.single("file"), updatetitlepicture);
 
 router.delete("/deletepost/:id_post", deletepost); // test success
@@ -58,22 +55,6 @@ router.get("/posttocategory/:category", posttocategory); // test success // conn
 router.get("/detailpost/:id_post", detailpost); //test success 
 
 router.get("/detaildraft/:id_draft", detaildraft);
-
-
-
-// router.get("/nameprofile", async (req, res) => {
-//     const {id} = req.query;
-//     const { data, error } = await supabase.from("Create_Post").select('id,user:profiles!Create_Post_id_fkey(username)').eq("id",id);
-//     if (error){
-//         console.log(data)
-//         res.status(400).json(error);
-//     }
-//     else{
-//         res.status(200).json(data);
-//     }
-// })
-
-
 
 router.post("/blogger", blogger);
 
