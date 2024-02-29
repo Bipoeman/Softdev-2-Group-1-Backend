@@ -38,5 +38,4 @@ export const refeshsigntoken = (id,role) =>{
 export const decodeToken = (token) =>{
     const raw = token.split(" ")[1];
     return  jwt.verify(raw, acesssecretKey);
-
 }
