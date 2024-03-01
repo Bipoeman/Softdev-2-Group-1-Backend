@@ -6,6 +6,7 @@ import { gettoilet } from "../controllers/restroom/getToilet.js";
 import { uploadtoiletpicture } from "../controllers/restroom/uploadtoiletpicture.js";
 import { uploadtoiletcomment } from "../controllers/restroom/uploadtoiletcomment.js";
 import { addcomment } from "../controllers/restroom/addcomment.js";
+import { getavgstar } from "../controllers/restroom/getavgstar.js";
 
 const uploadfile = multer();
 const router = express.Router();
@@ -18,6 +19,8 @@ router.post("/toilet", addtoilet);
 
 // get star and comment to something
 router.get("/review/:id", getreview);
+
+router.get("/review", getavgstar);
 
 router.post("/upload/toilet", uploadfile.single("file"), uploadtoiletpicture);
 
