@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
-import { blogger, commentpost, savepost, numsave, addpost, editpost, editdraft, report, addtitlepicture, updatetitlepicture, draftpost } from "../controllers/dekhor/adddek.js";
+import { blogger, commentpost, savepost, numsave, addpost,drafttopost, editpost, editdraft, report, addtitlepicture, updatetitlepicture, updatepicturedraft, draftpost } from "../controllers/dekhor/adddek.js";
 import { countsave, detailpost, detaildraft, posttocategory, showcomment, showsave, posttoprofile, posttodraft, searchblog, searchblogger, showsaveblogger, posttoprofileblogger } from "../controllers/dekhor/getdek.js";
 import { unsave, deletepost, deletedraft } from "../controllers/dekhor/deldek.js";
 import { getrandompost } from "../controllers/dekhor/getrandompost.js";
@@ -12,17 +12,21 @@ const router = express.Router();
 
 router.post("/createpost", uploadtitlepicture.single("file"), addpost); // test success
 
+router.post("/drafttopostblog", drafttopost);
+
 router.post("/draftpost", uploadtitlepicture.single("file"), draftpost);
 
 router.post("/report", report);
 
 router.get("/posttodraft", posttodraft);
 
-router.put("/editpost/:id_post", uploadtitlepicture.single("file"), editpost);
+router.put("/editpost/:id_post", editpost);
 
-router.put("/editdraft/:id_draft", uploadtitlepicture.single("file"), editdraft);
+router.put("/editdraft/:id_draft", editdraft);
 
 router.put("/updatepicture/:id_post", uploadtitlepicture.single("file"), updatetitlepicture);
+
+router.put("/updatepic/:id_draft", uploadtitlepicture.single("file"), updatepicturedraft);
 
 router.delete("/deletepost/:id_post", deletepost); // test success
 
