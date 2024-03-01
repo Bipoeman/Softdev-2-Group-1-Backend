@@ -1,8 +1,8 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
-import { blogger, commentpost, savepost, numsave, addpost,drafttopost, editpost, editdraft, report, addtitlepicture, updatetitlepicture, updatepicturedraft, draftpost } from "../controllers/dekhor/adddek.js";
-import { countsave, detailpost, detaildraft, posttocategory, showcomment, showsave, posttoprofile, posttodraft, searchblog, searchblogger, showsaveblogger, posttoprofileblogger } from "../controllers/dekhor/getdek.js";
+import { blogger, commentpost, savepost, numsave, addpost, drafttopost, editpost, editdraft, report, addtitlepicture, updatetitlepicture, updatepicturedraft, draftpost } from "../controllers/dekhor/adddek.js";
+import { countsave, detailpost, detaildraft, posttocategory, showcomment, showsave, posttoprofile, posttodraft, searchblog, searchblogger, showsaveblogger, posttoprofileblogger, bloggerdescription } from "../controllers/dekhor/getdek.js";
 import { unsave, deletepost, deletedraft } from "../controllers/dekhor/deldek.js";
 import { getrandompost } from "../controllers/dekhor/getrandompost.js";
 
@@ -16,7 +16,7 @@ router.post("/drafttopostblog", drafttopost);
 
 router.post("/draftpost", uploadtitlepicture.single("file"), draftpost);
 
-router.post("/report", report);
+router.post("/report/:id_post", report);
 
 router.get("/posttodraft", posttodraft);
 
@@ -51,6 +51,8 @@ router.get("/showsave", showsave); // test success // connect
 router.get("/posttoprofile", posttoprofile); //test success // connect ?? image asset or network , like number
 
 router.get("/showsaveblogger/:fullname", showsaveblogger); //connect
+
+router.get("/bloggerdescription/:fullname", bloggerdescription);
 
 router.get("/posttoprofileblogger/:fullname", posttoprofileblogger); //connect
 

@@ -165,5 +165,18 @@ export const searchblogger = async (req,res)=> {
     }
 }
 
+export const bloggerdescription = async (req,res)=> {
+    const {fullname} = req.params;
+    const {data,error} = await supabase.from("user_info").select('description').eq("fullname",fullname)
+    if (error){
+        console.log(error)
+        res.status(400).json(error);
+    }
+    else{
+        res.status(200).json(data);
+    }
+}
+
+
 
 
