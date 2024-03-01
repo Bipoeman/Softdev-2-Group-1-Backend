@@ -17,7 +17,7 @@ router.get("/", gettoilet);
 router.post("/toilet", addtoilet);
 
 // get star and comment to something
-router.get("/review", getreview);
+router.get("/review/:id", getreview);
 
 router.post("/upload/toilet", uploadfile.single("file"), uploadtoiletpicture);
 

@@ -1,7 +1,7 @@
 import supabase from "../database/database.js";
 
 export const getreview = async (req, res) => {
-  const { id } = req.body;
+  const id = req.param.id;
   const { data, error } = await supabase
     .from("toilet_comment")
     .select("*")
