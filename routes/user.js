@@ -3,11 +3,12 @@ import { uploadprofilecontroller } from "../controllers/user/uploadprofile.js";
 import multer from "multer";
 import {changeprofile} from "../controllers/user/changeprofile.js";
 import {changepassword} from "../controllers/user/changepassword.js";
-import {resetpassword} from "../controllers/user/resetpassword.js";
+import {sendotp} from "../controllers/user/sendotp.js";
 import {refreshtoken} from "../controllers/token/refreshaccesstoken.js";
 import {getuserdata} from "../controllers/user/getuserdata.js";
 import {getuserdatabyid} from "../controllers/user/getuserdatabyid.js";
 import {validaccesstoken} from "../controllers/token/validaccesstoken.js";
+import {resetpassword} from "../controllers/user/resetpassword.js";
 
 
 const uploadprofile = multer();
@@ -26,7 +27,9 @@ router.put("",validaccesstoken,changeprofile);
 
 router.put("/changepassword",validaccesstoken,changepassword);
 
-router.put("/resetpassword",resetpassword)
+router.get("/otp",sendotp)
+
+router.put("/reset",resetpassword)
 
 
 router.get("/refresh",refreshtoken)
