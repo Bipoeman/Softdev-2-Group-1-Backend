@@ -102,7 +102,7 @@ export const report = async (req, res) => {
     const { id_post } = req.params;
     const { title, reason } = req.body;
     const { data, error } = await supabase
-        .from("dekhor_post")
+        .from("dekhor_report")
         .insert({
             id_post,
             title,
