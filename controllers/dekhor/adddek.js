@@ -57,6 +57,23 @@ export const drafttopost = async (req, res) => {
     }
 };
 
+export const writeblogtest = async (req, res) => {
+    const id_user = decodeToken(req.headers.authorization).userId;
+    const { title, content, category, fullname} = req.body;
+    const { data, error } = await supabase.from("dekhor_post").insert({
+        title,
+        content,
+        category,
+        fullname,
+        id_user
+    });
+    if (error) {
+        res.status(500).json({ msg: error.message });
+    } else {
+        res.status(200).json(data);
+    }
+};
+
 export const editpost = async (req, res) => {
 
     const id_user = decodeToken(req.headers.authorization).userId;

@@ -57,6 +57,18 @@ export const showsaveblogger = async (req, res) => {
     }
 }
 
+export const showreport = async (req, res) => {
+    const { data, error } = await supabase
+        .from("dekhor_report")
+        .select('id_report,title, reason, id_user')
+    if (error) {
+        console.log(error);
+        res.status(400).json(error);
+    } else {
+        res.status(200).json(data);
+    }
+}
+
 export const posttoprofile = async (req, res) => {
     const id_user = decodeToken(req.headers.authorization).userId;
     const { data, error } = await supabase
