@@ -3,14 +3,14 @@ import { decodeToken } from "../token/token.js";
 
 export const addcomment = async (req, res) => {
   const userId = decodeToken(req.headers.authorization).userId;
-  const { star, comment, name_toilet } = req.body;
+  const { star, comment, id_toilet } = req.body;
   const { data, error } = await supabase
     .from("toilet_comment")
     .insert([
       {
         star,
         comment,
-        name_toilet,
+        id_toilet,
         user_id: userId,
       },
     ])
