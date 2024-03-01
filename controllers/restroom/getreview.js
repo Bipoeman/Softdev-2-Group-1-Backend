@@ -1,11 +1,11 @@
 import supabase from "../database/database.js";
 
 export const getreview = async (req, res) => {
-  const { name } = req.body;
+  const { id } = req.body;
   const { data, error } = await supabase
     .from("toilet_comment")
     .select("*")
-    .eq("name_toilet", name);
+    .eq("id_toilet", id);
   if (error) {
     res.status(500).send(error);
   } else {
