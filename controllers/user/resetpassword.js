@@ -1,83 +1,26 @@
 import supabase from "../database/database.js";
 import bcrypt from "bcryptjs";
-import nodemailer from "nodemailer";
-import {config} from "dotenv";
-
-config();
 
 export const resetpassword = async (req, res) => {
-    const {emailoruser} = req.body;
-    const {
-        data : datauser,
-        error
-    } = await supabase.from("user_info").select("*").or(`email.eq.${emailoruser},username.eq.${emailoruser}`);
+    const {email, otp, password} = req.body;
+    const {data: datauser, error} = await supabase.from("user_info").select("otp").eq("email", email);
     if (error) {
-        res.status(500).send(error)
+        res.status(500).json({msg: error.message})
     } else if (datauser.length === 0) {
-        res.status(400).json({error: true, message: "user does not exist"});
+        res.status(404).json({msg: "email not found"})
     } else {
-        // logic reset password
-        const newpass = generateRandomPassword(6);
-        const response = await mailsender(datauser[0].email, newpass);
-        if (response) {
-            const hashedPassword = bcrypt.hashSync(newpass, 10);
-            const {data, error} = await supabase
-                .from('user_info').update({password: hashedPassword}).eq('id', datauser[0].id);
-            if (error) {res.status(500).send(error)}
-            else {
-                res.send("new password has been sent to your email")
+        const validotp = await bcrypt.compare(otp,datauser[0].otp);
+        if(validotp){
+            const hashedpassword = bcrypt.hashSync(password, 8);
+            const {data , error} = await supabase.from("user_info").update({password: hashedpassword}).eq("email", email);
+            if (error) {
+                res.status(500).json({msg: error.message})
+            } else {
+                res.status(200).json({msg: "Password updated successfully"})
             }
-
         }
-            else {
-            res.status(500).send("error in sending email")
+        else {
+            res.status(400).json({msg: "Invalid OTP"})
         }
     }
-};
-
-const mailsender = async (email, newpass) => {
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        host: "smtp.forwardemail.net",
-        port: 587,
-        secure: false,
-        auth: {
-            // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    });
-    const mailOptions = {
-        from: {
-            name: "rummitr",
-            address: process.env.EMAIL_USER
-        },
-        to: [email],
-        subject: 'Sending Email using Node.js',
-        text: `it OTP for your account is  ${newpass}  , please change it after login.`
-    };
-    console.log("try to send email")
-    try {
-        const info = await transporter.sendMail(mailOptions);
-        console.log("Email sent: " + info.response);
-        return true
-    } catch (error) {
-        console.log(error);
-        return false
-    }
-}
-
-function generateRandomPassword(length) {
-    // Define allowed characters for the password
-    const charset = "0123456789";
-
-    let password = '';
-    for (let i = 0; i < length; i++) {
-        // Generate a random index to select a character from the charset
-        const randomIndex = Math.floor(Math.random() * charset.length);
-        // Append the randomly selected character to the password
-        password += charset[randomIndex];
-    }
-
-    return password;
 }
