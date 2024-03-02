@@ -2,13 +2,13 @@ import supabase from "../database/database.js";
 
 export const uploadtoiletcomment = async (req, res) => {
   const file = req.file;
-  const { commentid } = req.body;
+  const { id } = req.body;
   const newminetype = "image/jpeg";
-  const newfilename = `toilet_comment_${commentid}.jpeg`;
+  const newfilename = `toilet_comment_${id}.jpeg`;
   const { data, error } = await supabase
     .from("toilet_comment")
     .select("picture")
-    .eq("id", commentid);
+    .eq("id", id);
   if (error) {
     res.status(500).send(error);
   } else if (data.length === 0) {
@@ -26,7 +26,7 @@ export const uploadtoiletcomment = async (req, res) => {
       const { data, err } = await supabase
         .from("toilet_comment")
         .update({ picture: url })
-        .eq("id", commentid)
+        .eq("id", id)
         .select();
       if (err) {
         res.status(500).send(err);
