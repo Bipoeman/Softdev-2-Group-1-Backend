@@ -3,10 +3,11 @@ import supabase from "../database/database.js";
 
 export const changeprofile = async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
-    const {fullname, phonenum, birthday,description = null} = req.body
+    const {email,fullname, phonenum, birthday,description = null} = req.body
     const {data, error} = await supabase.schema("public")
         .from("user_info")
         .update({
+            email,
             fullname,
             phonenum,
             birthday,
