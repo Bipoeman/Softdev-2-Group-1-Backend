@@ -35,3 +35,14 @@ export const unsave = async (req,res)=>{
     }
 }
 
+export const deletereport = async (req,res)=>{
+    const {id_report} = req.params;
+    const {error} = await supabase.from("dekhor_report").delete().eq('id_report', id_report)
+    if (error){
+        res.status(500).json(error);
+    }
+    else{
+        res.status(200).json({msg:"success"})
+    }
+}
+
