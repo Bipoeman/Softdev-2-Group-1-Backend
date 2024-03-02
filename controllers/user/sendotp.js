@@ -10,7 +10,7 @@ export const sendotp = async (req, res) => {
     const {
         data : datauser,
         error
-    } = await supabase.from("user_info").select("*").or(`email.eq.${email},username.eq.${email}`);
+    } = await supabase.from("user_info").select("*").eq("email", email)
     if (error) {
         res.status(500).send(error)
     } else if (datauser.length === 0) {
