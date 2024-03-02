@@ -14,7 +14,8 @@ export const addcomment = async (req, res) => {
         user_id: userId,
       },
     ])
-    .select();
+    .select()
+    .single();
   if (error) {
     res.status(500).send(error);
   } else {
