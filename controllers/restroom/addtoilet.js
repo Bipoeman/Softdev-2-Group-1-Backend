@@ -1,7 +1,7 @@
 import supabase from "../database/database.js";
 
 export const addtoilet = async (req, res) => {
-  const { name, address, latitude, longitude, type } = req.body;
+  const { name, address, latitude, longitude, type, for_who } = req.body;
   const { data, error } = await supabase
     .from("toilet_info")
     .select("*")
@@ -20,9 +20,11 @@ export const addtoilet = async (req, res) => {
             latitude,
             longitude,
             type,
+            for_who: JSON.parse(for_who),
           },
         ])
-        .select();
+        .select()
+        .single();
       if (error) {
         res.status(500).send(error);
       } else {
