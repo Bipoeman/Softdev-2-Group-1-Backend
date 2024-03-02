@@ -8,6 +8,7 @@ import { uploadtoiletcomment } from "../controllers/restroom/uploadtoiletcomment
 import { addcomment } from "../controllers/restroom/addcomment.js";
 import { getavgstar } from "../controllers/restroom/getavgstar.js";
 import { edittoilet } from "../controllers/restroom/editToilet.js";
+import { deletetoilet } from "../controllers/restroom/deletetoilet.js";
 
 const uploadfile = multer();
 const router = express.Router();
@@ -18,7 +19,9 @@ router.get("/", gettoilet);
 // create toliet
 router.post("/toilet", addtoilet);
 
-router.post("/edittoilet", edittoilet);
+router.post("/edittoilet", edittoilet); // edit toilet
+
+router.delete("/toilet/:id", deletetoilet); // delete toilet
 
 // get star and comment to something
 router.get("/review/:id", getreview);
