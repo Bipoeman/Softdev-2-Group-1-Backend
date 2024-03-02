@@ -1,4 +1,5 @@
 import {decodeToken} from "../token/token.js";
+import supabase from "../database/database.js";
 
 export const updatebin = async (req,res) => {
     const user_id = decodeToken(req.headers.authorization).userId;
