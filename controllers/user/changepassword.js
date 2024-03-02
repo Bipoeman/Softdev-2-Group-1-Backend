@@ -7,7 +7,9 @@ export const changepassword = async (req,res)=>{
     const {newpassword} = req.body;
     const hashedPassword = bcrypt.hashSync(newpassword, 10);
     const {data,error} = await supabase.from("user_info").update({password: hashedPassword}).eq("id",id);
-    if (error) {res.status(500).send(error)}
+    if (error) {res.status(500).send(error
+
+    )}
     else{
         res.send(data)
     }

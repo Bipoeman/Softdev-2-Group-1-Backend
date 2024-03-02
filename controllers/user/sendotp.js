@@ -6,11 +6,11 @@ import {config} from "dotenv";
 config();
 
 export const sendotp = async (req, res) => {
-    const {emailoruser} = req.body;
+    const {email} = req.query;
     const {
         data : datauser,
         error
-    } = await supabase.from("user_info").select("*").or(`email.eq.${emailoruser},username.eq.${emailoruser}`);
+    } = await supabase.from("user_info").select("*").or(`email.eq.${email},username.eq.${email}`);
     if (error) {
         res.status(500).send(error)
     } else if (datauser.length === 0) {
@@ -27,7 +27,7 @@ export const sendotp = async (req, res) => {
             if (error) {
                 res.status(500).send(error)}
             else {
-                res.status(200).json( {message: "otp sent to email",data:data[0]})
+                res.status(200).json( {message: "otp sent to email"})
             }
         }
             else {
