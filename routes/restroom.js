@@ -31,9 +31,9 @@ router.get("/review", getavgstar);
 // create comment for toliet
 router.post("/review", addcomment);
 
-router.post("/upload/toilet", uploadfile.single("file"), uploadtoiletpicture);
+router.post("/upload", uploadfile.single("file"), uploadtoiletpicture);
 
-router.post("/upload/comment", uploadfile.single("file"), uploadtoiletcomment);
+router.post("/upload/review", uploadfile.single("file"), uploadtoiletcomment);
 
 
 export default router;
