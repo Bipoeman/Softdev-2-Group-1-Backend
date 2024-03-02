@@ -17,9 +17,9 @@ const router = express.Router();
 router.get("/", gettoilet);
 
 // create toliet
-router.post("/toilet", addtoilet);
+router.post("/", addtoilet);
 
-router.delete("/toilet/:id", deletetoilet); // delete toilet
+router.delete("/:id", deletetoilet); // delete toilet
 
 router.post("/edit", edittoilet); // edit toilet
 
