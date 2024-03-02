@@ -1,8 +1,8 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
-import { writeblogtest,blogger, commentpost, savepost, numsave, addpost, drafttopost, editpost, editdraft, report, addtitlepicture, updatetitlepicture, updatepicturedraft, draftpost } from "../controllers/dekhor/adddek.js";
-import { countsave, detailpost, detaildraft, posttocategory, showcomment, showsave, posttoprofile, posttodraft, searchblog, searchblogger, showsaveblogger, showreport, posttoprofileblogger, bloggerdescription } from "../controllers/dekhor/getdek.js";
+import { writeblogtest, blogger, commentpost, savepost, numsave, addpost, drafttopost, editpost, editdraft, report, addtitlepicture, updatetitlepicture, updatepicturedraft, draftpost } from "../controllers/dekhor/adddek.js";
+import { countsave, detailpost, detaildraft, posttocategory, showcomment, showsave, posttoprofile, posttodraft, searchblog, searchblogger, showsaveblogger, showreport, detailreport, posttoprofileblogger, bloggerdescription } from "../controllers/dekhor/getdek.js";
 import { unsave, deletepost, deletedraft, deletereport } from "../controllers/dekhor/deldek.js";
 import { getrandompost } from "../controllers/dekhor/getrandompost.js";
 
@@ -12,15 +12,15 @@ const router = express.Router();
 
 router.post("/createpost", uploadtitlepicture.single("file"), addpost); // test success
 
-router.post("/writeblogtest", writeblogtest);
+// router.post("/writeblogtest", writeblogtest);
 
-router.post("/addtitlepicture/:id_post", uploadtitlepicture.single("file"), addtitlepicture);
+// router.put("/addtitlepicture/:id_post", uploadtitlepicture.single("file"), addtitlepicture);
 
 router.post("/drafttopostblog", drafttopost);
 
 router.post("/draftpost", uploadtitlepicture.single("file"), draftpost);
 
-router.post("/report/:id_post", report);
+router.post("/report/:id_post/:id_blogger", report);
 
 router.get("/posttodraft", posttodraft);
 
@@ -59,6 +59,8 @@ router.get("/posttoprofile", posttoprofile); //test success // connect ?? image 
 router.get("/showsaveblogger/:fullname", showsaveblogger); //connect
 
 router.get("/showreport", showreport);
+
+router.get("/detailreport/:id_report", detailreport);
 
 router.get("/bloggerdescription/:fullname", bloggerdescription);
 

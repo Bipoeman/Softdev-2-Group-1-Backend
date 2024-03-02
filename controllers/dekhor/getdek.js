@@ -60,7 +60,7 @@ export const showsaveblogger = async (req, res) => {
 export const showreport = async (req, res) => {
     const { data, error } = await supabase
         .from("dekhor_report")
-        .select('id_report,title, reason, id_user')
+        .select('id_report,title, reason,id_post')
     if (error) {
         console.log(error);
         res.status(400).json(error);
@@ -68,6 +68,20 @@ export const showreport = async (req, res) => {
         res.status(200).json(data);
     }
 }
+
+export const detailreport = async (req, res) => {
+    const { id_report } = req.params;
+    const { data, error } = await supabase
+        .from("dekhor_report")
+        .select('title,reason,detail:public_dekhor_report_id_post_fkey(title,content,image_link),user:public_dekhor_report_id_blogger_fkey(fullname,profile)').eq("id_report", id_report)
+    if (error) {
+        console.log(error);
+        res.status(400).json(error);
+    } else {
+        res.status(200).json(data);
+    }
+}
+
 
 export const posttoprofile = async (req, res) => {
     const id_user = decodeToken(req.headers.authorization).userId;
@@ -130,7 +144,7 @@ export const posttocategory = async (req, res) => {
 export const detailpost = async (req, res) => {
     const { id_post } = req.params;
     const { data, error } = await supabase.from("dekhor_post")
-        .select('id_post,title,content, category, image_link,save, user:public_dekhor_post_id_user_fkey(fullname,profile),pathimage')
+        .select('id_post,title,content, category, image_link,save, user:public_dekhor_post_id_user_fkey(fullname,profile),id_user,pathimage')
         .eq("id_post", id_post)
     if (error) {
         console.log(data)
