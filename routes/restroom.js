@@ -19,20 +19,21 @@ router.get("/", gettoilet);
 // create toliet
 router.post("/toilet", addtoilet);
 
-router.post("/edittoilet", edittoilet); // edit toilet
-
 router.delete("/toilet/:id", deletetoilet); // delete toilet
+
+router.post("/edit", edittoilet); // edit toilet
 
 // get star and comment to something
 router.get("/review/:id", getreview);
 
 router.get("/review", getavgstar);
 
+// create comment for toliet
+router.post("/review", addcomment);
+
 router.post("/upload/toilet", uploadfile.single("file"), uploadtoiletpicture);
 
 router.post("/upload/comment", uploadfile.single("file"), uploadtoiletcomment);
 
-// create comment for toliet
-router.post("/comment", addcomment);
 
 export default router;
