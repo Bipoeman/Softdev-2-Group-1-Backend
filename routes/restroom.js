@@ -12,6 +12,10 @@ import { edittoilet } from "../controllers/restroom/editToilet.js";
 import { deletetoilet } from "../controllers/restroom/deletetoilet.js";
 import { pinreport } from "../controllers/restroom/pinreport.js";
 import { gettoiletbyid } from "../controllers/restroom/getToiletByID.js";
+import {getreport} from "../controllers/restroom/getreport.js";
+import {getacceptreport} from "../controllers/restroom/getacceptreport.js";
+import {getrejectreport} from "../controllers/restroom/getrejectreport.js";
+import {updatetoiletreport} from "../controllers/restroom/updatetoiletreport.js";
 
 const uploadfile = multer();
 const router = express.Router();
@@ -28,7 +32,15 @@ router.delete("/:id", validaccesstoken, deletetoilet); // delete toilet
 
 router.put("/:id", validaccesstoken, edittoilet); // edit toilet
 
-router.post("/report", validaccesstoken, uploadfile.single("file"), pinreport); // report toilet
+router.get("/report",getreport)
+
+router.get("/report/accept", getacceptreport);// get report toilet
+
+router.get("/report/accept", getrejectreport);
+
+router.post("/report", validaccesstoken, uploadfile.single("file"), pinreport);// report toilet
+
+router.put("/report", validaccesstoken,updatetoiletreport); // edit repor
 
 // get star and comment to something
 router.get("/review/:id", getreview);
