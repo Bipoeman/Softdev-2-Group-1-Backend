@@ -61,6 +61,7 @@ export const showreport = async (req, res) => {
     const { data, error } = await supabase
         .from("dekhor_report")
         .select('id_report,title, reason,id_post')
+        .eq("status", "null");
     if (error) {
         console.log(error);
         res.status(400).json(error);

@@ -5,6 +5,10 @@ import { writeblogtest, blogger, commentpost, savepost, numsave, addpost, draftt
 import { countsave, detailpost, detaildraft, posttocategory, showcomment, showsave, posttoprofile, posttodraft, searchblog, searchblogger, showsaveblogger, showreport, detailreport, posttoprofileblogger, bloggerdescription } from "../controllers/dekhor/getdek.js";
 import { unsave, deletepost, deletedraft, deletereport } from "../controllers/dekhor/deldek.js";
 import { getrandompost } from "../controllers/dekhor/getrandompost.js";
+import {showacceptreport} from "../controllers/dekhor/showacceptreport.js";
+import {showrejectreport} from "../controllers/dekhor/showrejectreport.js";
+import {updatereport} from "../controllers/dekhor/updatereport.js";
+import {validaccesstoken} from "../controllers/token/validaccesstoken.js";
 
 const uploadtitlepicture = multer();
 
@@ -59,6 +63,12 @@ router.get("/posttoprofile", posttoprofile); //test success // connect ?? image 
 router.get("/showsaveblogger/:fullname", showsaveblogger); //connect
 
 router.get("/showreport", showreport);
+
+router.get("/showreport/accept", showacceptreport)
+
+router.get("/showreport/reject", showrejectreport)
+
+router.put("/report/update",validaccesstoken, updatereport);
 
 router.get("/detailreport/:id_report", detailreport);
 
