@@ -16,7 +16,7 @@ export const updatebin = async (req, res) => {
       {
         location,
         description,
-        bintype,
+        bintype: JSON.parse(bintype),
         user_update: user_id,
       },
     ])
