@@ -40,7 +40,7 @@ router.get("/report/accept", getrejectreport);
 
 router.post("/report", validaccesstoken, uploadfile.single("file"), pinreport);// report toilet
 
-router.put("/updatereport", validaccesstoken,updatetoiletreport); // edit repor
+router.put("/report/updatereport", validaccesstoken,updatetoiletreport); // edit repor
 
 // get star and comment to something
 router.get("/review/:id", getreview);
