@@ -5,7 +5,7 @@ export const updatereport = async (req, res) => {
     const {data, error} = await supabase.from("bin_report").update({status:textaccept(status)}).eq("id",reportID);
     if (error) {res.status(500).send(error)}
     else {
-        res.send(data);
+        res.send("upodate success");
     }
 };
 
