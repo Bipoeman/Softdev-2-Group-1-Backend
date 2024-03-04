@@ -9,6 +9,7 @@ import {getuserdata} from "../controllers/user/getuserdata.js";
 import {getuserdatabyid} from "../controllers/user/getuserdatabyid.js";
 import {validaccesstoken} from "../controllers/token/validaccesstoken.js";
 import {resetpassword} from "../controllers/user/resetpassword.js";
+import {changeemail} from "../controllers/user/changeemail.js";
 
 
 const uploadprofile = multer();
@@ -24,6 +25,7 @@ router.post("/upload",validaccesstoken,uploadprofile.single("file"),uploadprofil
 
 router.put("",validaccesstoken,changeprofile);
 
+router.put("/changeemail",validaccesstoken,changeemail)
 
 router.put("/changepassword",validaccesstoken,changepassword);
 
