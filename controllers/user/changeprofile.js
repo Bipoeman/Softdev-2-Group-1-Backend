@@ -7,12 +7,18 @@ export const changeprofile = async (req, res) => {
     const {email, fullname, phonenum, birthday, description} = req.body
     const {data, error} = await supabase.from("user_info")
         .update({
-            email, fullname, phonenum, birthday, description
-        })
-        .eq("id", id)
+            email,
+            fullname,
+            phonenum,
+            birthday,
+            description
+        }).eq("id", id)
     if (error) {
-        res.status(500).send(error)
-    } else {
-        res.send("change successfully ")
+        console.log(error);
+        res.status(500).send(error);
+    }
+    else{
+        res.send("change profile success")
+
     }
 }
