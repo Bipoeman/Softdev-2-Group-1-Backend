@@ -24,7 +24,6 @@ router.post("/upload",validaccesstoken,uploadprofile.single("file"),uploadprofil
 
 router.put("",validaccesstoken,changeprofile);
 
-
 router.put("/changepassword",validaccesstoken,changepassword);
 
 router.get("/otp",sendotp)
