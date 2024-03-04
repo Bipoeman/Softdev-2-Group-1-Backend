@@ -8,7 +8,6 @@ import { uploadtoiletpicture } from "../controllers/restroom/uploadtoiletpicture
 import { uploadtoiletcomment } from "../controllers/restroom/uploadtoiletcomment.js";
 import { addcomment } from "../controllers/restroom/addcomment.js";
 import { getavgstar } from "../controllers/restroom/getavgstar.js";
-import { edittoilet } from "../controllers/restroom/editToilet.js";
 import { deletetoilet } from "../controllers/restroom/deletetoilet.js";
 import { pinreport } from "../controllers/restroom/pinreport.js";
 import { gettoiletbyid } from "../controllers/restroom/getToiletByID.js";
@@ -16,6 +15,7 @@ import {getreport} from "../controllers/restroom/getreport.js";
 import {getacceptreport} from "../controllers/restroom/getacceptreport.js";
 import {getrejectreport} from "../controllers/restroom/getrejectreport.js";
 import {updatetoiletreport} from "../controllers/restroom/updatetoiletreport.js";
+import {edittoilet} from "../controllers/restroom/edittoilet.js";
 
 const uploadfile = multer();
 const router = express.Router();
