@@ -1,4 +1,5 @@
 import supabase from "../database/database.js";
+import { decodeToken } from "../token/token.js";
 
 export const getbin = async (req, res) => {
   const { data, error } = await supabase.from("bin_info").select("*");
@@ -24,18 +25,20 @@ export const getbinbyid = async (req, res) => {
   }
 };
 
-export const searchbin = async (req, res) => {
-  const { locationsordescription } = req.body;
+export const getbinbyuserid = async (req, res) => {
+  const userId = decodeToken(req.headers.authorization).userId;
   const { data, error } = await supabase
-    .schema("pinthebin")
     .from("bin_info")
     .select("*")
-    .or(
-      `location.like.${locationsordescription}`,
-      `description.like.${locationsordescription}`
-    );
+    .eq("user_update", userId);
   if (error) throw error;
   else {
-    res.send(data);
+    if (data.length === 0) {
+      res.status(404).send("bin not found");
+    } else {
+      res.send(data);
+    }
   }
 };
+
+

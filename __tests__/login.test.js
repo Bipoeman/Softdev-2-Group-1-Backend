@@ -1,64 +1,43 @@
-import { loginController } from "../controllers/login";
-import { signToken } from "../controllers/token/token";
+import { loginController } from "../controllers/user/login.js";
+import { accesssigntoken } from "../controllers/token/token";
 
 const res = {
     status: jest.fn().mockReturnThis(),
     send: jest.fn().mockReturnThis(),
-    json: jest.fn().mockReturnThis(),
 };
 
-jest.mock("../controllers/database/database");
+jest.mock("../controllers/token/token", () => {
+    const originalModule = jest.requireActual("../controllers/token/token");
 
-jest.mock("../controllers/token/token");
-
-jest.mock("bcryptjs", () => {
     return {
-        compare: jest.fn().mockImplementation((s, hash) => s == hash)
+        ...originalModule,
+        signToken: (id, name) => "signedToken"
     };
 });
 
-it('should return login success', async () => {
+it('should return login success', () => {
     const req = {
         body: {
-            emailoruser: "admin@admin",
-            password: "admin_password"
+            username: "admin",
+            password: "admin"
         }
     };
 
-    await loginController(req, res);
+    loginController(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.send).toHaveBeenCalledWith(signToken(1, "admin"));
+    expect(res.send).toHaveBeenCalledWith(accesssigntoken(2, "admin"));
 });
 
-it('should return login fail (no user)', async () => {
+it('should return login fail', () => {
     const req = {
         body: {
-            emailoruser: "user@email",
-            password: "admin_password"
+            username: "admin",
+            password: "admin1"
         }
     };
 
-    await loginController(req, res);
+    loginController(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-        error: true
-    }));
-});
-
-it('should return login fail (wrong password)', async () => {
-    const req = {
-        body: {
-            emailoruser: "admin@admin",
-            password: "wrong"
-        }
-    };
-
-    await loginController(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-        error: true
-    }));
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.send).toHaveBeenCalledWith('login fail');
 });

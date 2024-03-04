@@ -1,14 +1,17 @@
+import { decodeToken } from "../token/token.js";
 import supabase from "../database/database.js";
 
 export const addtoilet = async (req, res) => {
-  const { name, address, latitude, longitude, type } = req.body;
+  const userId = decodeToken(req.headers.authorization).userId;
+  const { name, address, latitude, longitude, type, for_who } = req.body;
   const { data, error } = await supabase
     .from("toilet_info")
     .select("*")
     .eq("latitude", latitude)
     .eq("longitude", longitude);
-  if (error) throw error;
-  else {
+  if (error) {
+    res.status(500).send(error);
+  } else {
     if (data.length === 0) {
       const { data, error } = await supabase
         .from("toilet_info")
@@ -19,11 +22,15 @@ export const addtoilet = async (req, res) => {
             latitude,
             longitude,
             type,
+            for_who: JSON.parse(for_who),
+            user_id: userId,
           },
         ])
-        .select();
-      if (error) throw error;
-      else {
+        .select()
+        .single();
+      if (error) {
+        res.status(500).send(error);
+      } else {
         res.send(data);
       }
     } else {

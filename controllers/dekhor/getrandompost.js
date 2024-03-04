@@ -1,16 +1,13 @@
 import supabase from "../database/database.js";
 
-export const getrandompost = async (req,res) => {
+export const getrandompost = async (req, res) => {
     const { data, error } = await supabase
-        .from('updaterandom') // Replace with your table name
-        .select('id_post,title,category,user:profiles!Create_Post_id_fkey(username),image_link')
-        // .order('random()') // This orders the rows randomly
-        .limit(6); // Adjust the limit as needed
+        .from('dekhor_random')
+        .select('id_post,title, category, image_link,save, user:public_dekhor_post_id_user_fkey(fullname)')
+        .limit(6);
     if (error) {
         console.error('Error fetching random rows:', error);
     } else {
         res.status(200).json(data);
-        // console.log('Random rows:', data);
-        // Do something with the random rows
     }
 }

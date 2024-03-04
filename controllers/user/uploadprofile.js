@@ -1,5 +1,5 @@
-import supabase from "./database/database.js";
-import {decodeToken} from "./token/token.js";
+import supabase from "../database/database.js";
+import {decodeToken} from "../token/token.js";
 
 export const uploadprofilecontroller = async (req, res) => {
     const file = req.file;

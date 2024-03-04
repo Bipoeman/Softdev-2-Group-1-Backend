@@ -1,68 +1,35 @@
-import bcrypt from "bcryptjs";
-import { registerController } from "../controllers/register";
+import { registerController } from "../controllers/user/register.js";
 
 const res = {
     status: jest.fn().mockReturnThis(),
     send: jest.fn().mockReturnThis(),
-    json: jest.fn().mockReturnThis(),
 };
 
-jest.mock("../controllers/database/database");
-
-jest.mock("bcryptjs", () => {
-    return {
-        hashSync: jest.fn().mockImplementation((s, salt) => "hashedPassword")
-    };
-});
-
-it('should return register success', async () => {
+it('should return register success', () => {
     const req = {
         body: {
-            email: "newuser@email",
-            fullname: "John Doe",
-            username: "john123",
-            password: "securepassword"
+            username: "admin",
+            password: "admin",
+            passwordagain: "admin"
         }
     };
 
-    await registerController(req, res);
+    registerController(req, res);
 
-    expect(bcrypt.hashSync).toHaveBeenCalledWith(req.body.password, 10);
-    expect(res.send).toHaveBeenCalled();
+    expect(res.send).toHaveBeenCalledWith('register success');
 });
 
-it('should return register fail (email)', async () => {
+it('should return register fail', () => {
     const req = {
         body: {
-            email: "admin@admin",
-            fullname: "John Doe",
-            username: "john123",
-            password: "securepassword"
+            username: "admin",
+            password: "admin1",
+            passwordagain: "admin"
         }
     };
 
-    await registerController(req, res);
+    registerController(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-        error: true
-    }));
-});
-
-it('should return register fail (username)', async () => {
-    const req = {
-        body: {
-            email: "admin@admin",
-            fullname: "John Doe",
-            username: "john123",
-            password: "securepassword"
-        }
-    };
-
-    await registerController(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-        error: true
-    }));
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.send).toHaveBeenCalledWith('register fail');
 });

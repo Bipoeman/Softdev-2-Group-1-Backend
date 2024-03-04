@@ -1,83 +1,92 @@
 import express from "express";
 import multer from "multer";
 import supabase from "../controllers/database/database.js";
-import { blogger, commentpost, likepost, searchblog,addpost,addtitlepicture } from "../controllers/dekhor/adddek.js";
-import { countlike, detailpost, posttocategory, showcomment, showlike,posttoprofile } from "../controllers/dekhor/getdek.js";
-import { unlike,deletepost } from "../controllers/dekhor/deldek.js";
-import {getrandompost} from "../controllers/dekhor/getrandompost.js";
+import { writeblogtest, blogger, commentpost, savepost, numsave, addpost, drafttopost, editpost, editdraft, report, addtitlepicture, updatetitlepicture, updatepicturedraft, draftpost } from "../controllers/dekhor/adddek.js";
+import { countsave, detailpost, detaildraft, posttocategory, showcomment, showsave, posttoprofile, posttodraft, searchblog, searchblogger, showsaveblogger, showreport, detailreport, posttoprofileblogger, bloggerdescription } from "../controllers/dekhor/getdek.js";
+import { unsave, deletepost, deletedraft, deletereport } from "../controllers/dekhor/deldek.js";
+import { getrandompost } from "../controllers/dekhor/getrandompost.js";
+import {showacceptreport} from "../controllers/dekhor/showacceptreport.js";
+import {showrejectreport} from "../controllers/dekhor/showrejectreport.js";
+import {updatereport} from "../controllers/dekhor/updatereport.js";
+import {validaccesstoken} from "../controllers/token/validaccesstoken.js";
 
 const uploadtitlepicture = multer();
 
 const router = express.Router();
 
-router.post("/createpost",addpost); // test success
+router.post("/createpost", uploadtitlepicture.single("file"), addpost); // test success
 
-// รูปภาพของ post
-router.post("/upload",uploadtitlepicture.single("file"),addtitlepicture); // test พร้อม createpost ??
+// router.post("/writeblogtest", writeblogtest);
 
-router.delete("/deletepost",deletepost); // test success
+// router.put("/addtitlepicture/:id_post", uploadtitlepicture.single("file"), addtitlepicture);
 
-router.post("/likepost",likepost); // test success
+router.post("/drafttopostblog", drafttopost);
 
-router.get("/countlike",countlike); // test success
+router.post("/draftpost", uploadtitlepicture.single("file"), draftpost);
 
-router.delete("/unlike",unlike); // test success
+router.post("/report/:id_post/:id_blogger", report);
 
-router.post("/commentpost",commentpost); // test success
+router.get("/posttodraft", posttodraft);
 
-router.get("/showcomment",showcomment); // test success
+router.put("/editpost/:id_post", editpost);
 
-router.post("/randompost",getrandompost)
+router.put("/editdraft/:id_draft", editdraft);
 
-router.get("/showlike",showlike); // test success
+router.put("/updatepicture/:id_post", uploadtitlepicture.single("file"), updatetitlepicture);
 
-router.get("/posttoprofile",posttoprofile); //test success
+router.put("/updatepic/:id_draft", uploadtitlepicture.single("file"), updatepicturedraft);
 
-router.get("/posttocategory",posttocategory); // test success
+router.delete("/deletepost/:id_post", deletepost); // test success
 
-router.get("/detailpost",detailpost); //test success
-// router.get("/nameprofile", async (req, res) => {
-//     const {id} = req.query;
-//     const { data, error } = await supabase.from("Create_Post").select('id,user:profiles!Create_Post_id_fkey(username)').eq("id",id);
-//     if (error){
-//         console.log(data)
-//         res.status(400).json(error);
-//     }
-//     else{
-//         res.status(200).json(data);
-//     }
-// })
+router.delete("/deletedraft/:id_draft", deletedraft);
 
-router.get("/idtopic", async (req, res) => {
-    const {id} = req.query;
-    const { data, error } = await supabase.from("profiles").select('avatar_url').eq("id",id);
-    if (error){
-        console.log(data)
-        res.status(400).json(error);
-    }
-    else{
-        res.status(200).json(data);
-    }
-})
+router.delete("/deletereport/:id_report", deletereport);
+
+router.post("/savepost/:id_post", savepost); // test success
+
+router.get("/countsave/:id_post", countsave); // test success
+
+router.patch("/numsave/:id_post", numsave);
+
+router.delete("/unsave/:id_post", unsave); // test success
+
+router.post("/commentpost", commentpost); // test success //connect
+
+router.get("/showcomment/:id_post", showcomment); // test success
+
+router.get("/randompost", getrandompost) //connect
+
+router.get("/showsave", showsave); // test success // connect
+
+router.get("/posttoprofile", posttoprofile); //test success // connect ?? image asset or network , like number
+
+router.get("/showsaveblogger/:fullname", showsaveblogger); //connect
+
+router.get("/showreport", showreport);
+
+router.get("/showreport/accept", showacceptreport)
+
+router.get("/showreport/reject", showrejectreport)
+
+router.put("/report/update",validaccesstoken, updatereport);
+
+router.get("/detailreport/:id_report", detailreport);
+
+router.get("/bloggerdescription/:fullname", bloggerdescription);
+
+router.get("/posttoprofileblogger/:fullname", posttoprofileblogger); //connect
+
+router.get("/posttocategory/:category", posttocategory); // test success // connect
+
+router.get("/detailpost/:id_post", detailpost); //test success 
+
+router.get("/detaildraft/:id_draft", detaildraft);
 
 router.post("/blogger", blogger);
 
-router.post("/searchblog",searchblog); // test success
+router.get("/searchblog", searchblog); // test success // connect
 
-
-//search user
-// router.post("/searcuser",async (req,res)=> {
-//     const {data,error} = await supabase.from("user_info").select('title,user:profiles!Create_Post_id_fkey(username),category,id_post,image_link') 
-//     if (error){
-//         console.log(error)
-//         res.status(400).json(error);
-//     }
-//     else{
-//         res.status(200).json(data);
-//     }
-// })
-
-
+router.get("/searchblogger", searchblogger); // connect
 
 
 export default router;
