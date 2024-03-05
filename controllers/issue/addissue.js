@@ -21,7 +21,7 @@ export const addissue = async (req, res) => {
         else {
             console.log("file exist")
             const user_issue_id = dataissue.id;
-            const newminetype = "image/jpeg";
+            const newminetype = file.mimetype;
             const { data: datapicture, error } = await supabase.storage.from("user_issue")
                 .upload(`issue_${user_issue_id}`, file.buffer, {
                     contentType: newminetype
