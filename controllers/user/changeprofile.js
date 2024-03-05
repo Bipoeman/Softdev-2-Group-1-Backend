@@ -1,11 +1,11 @@
 import {decodeToken} from "../token/token.js";
 import supabase from "../database/database.js";
 
+
 export const changeprofile = async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
-    const {email,fullname, phonenum, birthday,description = null} = req.body
-    const {data, error} = await supabase.schema("public")
-        .from("user_info")
+    const {email, fullname, phonenum, birthday, description} = req.body
+    const {data, error} = await supabase.from("user_info")
         .update({
             email,
             fullname,
@@ -19,5 +19,6 @@ export const changeprofile = async (req, res) => {
     }
     else{
         res.send("change profile success")
+
     }
 }
