@@ -4,12 +4,14 @@ import supabase from "../database/database.js";
 export const addissue = async (req, res) => {
     const userId = decodeToken(req.headers.authorization).userId;
     const file = req.file || null;
-    const { title, type, description } = req.body
+    const { title, type, description, more_info } = req.body
+    const info = more_info ? JSON.parse(more_info) : null;
     const { data: dataissue, error } = await supabase.from("user_issue").insert([{
         title,
         type,
         description,
-        user_id: userId
+        user_id: userId,
+        more_info: info
     }]).select("*").single();
     if (error) { console.log(error); res.status(500).send(error); }
     else {
