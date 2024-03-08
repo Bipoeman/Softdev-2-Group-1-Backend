@@ -41,13 +41,13 @@ export const addbin = async (req, res) => {
 
 export const addpictureController = async (req, res) => {
   const file = req.file;
-  const binId = req.body.id;
-  const newminetype = "image/jpeg";
-  const newfilename = `bin_${binId}.jpeg`;
+  const { id } = req.body;
+  const newminetype = file.mimetype;
+  const newfilename = `bin_${id}`;
   let { data, error } = await supabase
     .from("bin_info")
     .select("*")
-    .eq("id", binId);
+    .eq("id", id);
   if (error) throw error;
   else if (data[0].picture === null) {
     const { data: datapicture, err } = await supabase.storage
@@ -61,7 +61,7 @@ export const addpictureController = async (req, res) => {
       const { data, err } = await supabase
         .from("bin_info")
         .update({ picture: url })
-        .eq("id", binId)
+        .eq("id", id)
         .select();
       if (err) throw err;
       else {
