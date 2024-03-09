@@ -36,16 +36,15 @@ export const addpictureReportController = async (req, res) => {
     });
   if (err) throw err;
   else {
-    // const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
-    // const { data, err } = await supabase
-    //   .from("user_issue")
-    //   .update({ picture: url })
-    //   .eq("id", id);
-    // if (err) {
-    //   res.status(500).send(err);
-    // } else {
-    //   res.send(data);
-    // }
-    res.send(datapicture);
+    const url = `https://pyygounrrwlsziojzlmu.supabase.co/storage/v1/object/public/${datapicture.fullPath}`;
+    const { data, err } = await supabase
+      .from("user_issue")
+      .update({ picture: url })
+      .eq("id", id);
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.send(data);
+    }
   }
 };
