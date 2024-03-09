@@ -25,13 +25,14 @@ export const addbinreport = async (req, res) => {
 
 export const addpictureReportController = async (req, res) => {
   const file = req.file;
-  const binReport = req.body.id;
-  const newminetype = "image/jpeg";
-  const newfilename = `issue_${binReport}`;
+  const { id } = req.body;
+  const newminetype = file.mimetype;
+  const newfilename = `issue_${id}`;
   const { data: datapicture, err } = await supabase.storage
     .from("user_issue")
     .upload(newfilename, file.buffer, {
       contentType: newminetype,
+      upsert: true,
     });
   if (err) throw err;
   else {
@@ -39,7 +40,7 @@ export const addpictureReportController = async (req, res) => {
     const { data, err } = await supabase
       .from("user_issue")
       .update({ picture: url })
-      .eq("id", binReport);
+      .eq("id", id);
     if (err) {
       res.status(500).send(err);
     } else {

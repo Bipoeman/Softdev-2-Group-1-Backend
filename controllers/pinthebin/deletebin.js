@@ -10,7 +10,7 @@ export const deletebin = async (req, res) => {
   else if (data.length != 0) {
     const { data, error } = await supabase.storage
       .from("bin")
-      .remove(["bin_" + binId + ".jpeg"]);
+      .remove(["bin_" + binId]);
     if (error) res.status(500).send(error);
     else {
       const { data, error } = await supabase
