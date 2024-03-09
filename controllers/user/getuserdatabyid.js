@@ -4,7 +4,7 @@ import supabase from "../database/database.js";
 export const getuserdatabyid =async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
     const {data, error} = await supabase.from("user_info")
-        .select("id,email,fullname,username,phonenum,birthday,profile,role,description")
+        .select("id,email,fullname,username,phonenum,birthday,profile,role,description,avatar")
         .eq("id", id);
 
     if (error) {res.status(500).send(error)}

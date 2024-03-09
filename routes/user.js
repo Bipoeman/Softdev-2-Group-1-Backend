@@ -10,6 +10,7 @@ import {getuserdatabyid} from "../controllers/user/getuserdatabyid.js";
 import {validaccesstoken} from "../controllers/token/validaccesstoken.js";
 import {resetpassword} from "../controllers/user/resetpassword.js";
 import {changeemail} from "../controllers/user/changeemail.js";
+import { updateavatar } from "../controllers/user/updateavatar.js";
 
 
 const uploadprofile = multer();
@@ -18,7 +19,7 @@ const router = express.Router();
 // all that is path  url/user
 router.get("", getuserdata);
 
-
+// get avatar in this 
 router.get("/id",validaccesstoken, getuserdatabyid);
 
 router.post("/upload",validaccesstoken,uploadprofile.single("file"),uploadprofilecontroller);
@@ -32,6 +33,12 @@ router.put("/changepassword",validaccesstoken,changepassword);
 router.get("/otp",sendotp)
 
 router.put("/reset",resetpassword)
+
+
+// insert and update avatar 
+router.put("/avatar",validaccesstoken,updateavatar)
+
+
 
 
 router.get("/refresh",refreshtoken)
