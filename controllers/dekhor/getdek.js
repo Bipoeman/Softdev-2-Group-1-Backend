@@ -47,7 +47,7 @@ export const showsaveblogger = async (req, res) => {
     const fullname = req.params.fullname;
     const { data, error } = await supabase
         .from('dekhor_savepost')
-        .select('post:dekhor_post(id_post,title,category,image_link),fullname_blogger').eq("fullname", fullname)
+        .select('post:dekhor_post(id_post,title,category,image_link,save),fullname_blogger').eq("fullname", fullname)
     if (error) {
         console.log(data)
         res.status(400).json(error);
@@ -118,7 +118,7 @@ export const posttoprofileblogger = async (req, res) => {
     const fullname = req.params.fullname;
     const { data, error } = await supabase
         .from("dekhor_post")
-        .select('id_post, title, category, image_link,fullname')
+        .select('id_post, title, category, image_link,save,fullname')
         .eq("fullname",fullname)
 
     if (error) {
