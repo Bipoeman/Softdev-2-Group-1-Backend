@@ -43,4 +43,5 @@ router.put("/avatar",validaccesstoken,updateavatar)
 router.get("/dashboard",validaccesstoken,userdashboardcontroller)
 
 router.get("/refresh",refreshtoken)
+
 export default router;

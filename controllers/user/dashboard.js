@@ -5,23 +5,48 @@ export const userdashboardcontroller = async (req, res) => {
     const id = decodeToken(req.headers.authorization).userId;
     let infos = {};
     let errors = {};
-    (infos.ruam_mitr, errors.ruam_mitr) = await supabase
+
+    var {data, error} = await supabase
         .from("user_info")
         .select("id, email, fullname, username, phonenum, birthday, profile, role, description, avatar")
         .eq("id", id);
-    (infos.dekhor, errors.dekhor) = await supabase
+    if (error) {
+        errors.user_info = error;
+    } else {
+        infos.user_info = data[0];
+    }
+
+    var {data, error} = await supabase
         .from("dekhor_post")
         .select('id_post, title, category, image_link, save, user:public_dekhor_post_id_user_fkey(fullname)')
         .eq("id_user", id);
-    (infos.pin_the_bin, errors.pin_the_bin) = await supabase
+    if (error) {
+        errors.dekhor_post = error;
+    } else {
+        infos.dekhor_post = data;
+    }
+
+    var {data, error} = await supabase
         .from("bin_info")
         .select("*")
         .eq("user_update", id);
-    (infos.restroom, errors.restroom) = await supabase
+    if (error) {
+        errors.bin_info = error;
+    } else {
+        infos.bin_info = data;
+    }
+
+    var {data, error} = await supabase
         .from("toilet_info")
         .select("*")
         .eq("user_id", id);
-    if (Object.keys(errors).length !== 0) {
+    if (error) {
+        errors.toilet_info = error;
+    } else {
+        infos.toilet_info = data;
+    }
+
+    if (Object.values(errors).some((error) => error !== null)) {
         res.status(500).send(errors);
     } else {
         res.status(200).send(infos);
