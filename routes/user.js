@@ -11,6 +11,7 @@ import {validaccesstoken} from "../controllers/token/validaccesstoken.js";
 import {resetpassword} from "../controllers/user/resetpassword.js";
 import {changeemail} from "../controllers/user/changeemail.js";
 import { updateavatar } from "../controllers/user/updateavatar.js";
+import {userdashboardcontroller} from "../controllers/user/dashboard.js";
 
 
 const uploadprofile = multer();
@@ -38,8 +39,9 @@ router.put("/reset",resetpassword)
 // insert and update avatar 
 router.put("/avatar",validaccesstoken,updateavatar)
 
-
-
+// user dashboard
+router.get("/dashboard",validaccesstoken,userdashboardcontroller)
 
 router.get("/refresh",refreshtoken)
+
 export default router;
