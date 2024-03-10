@@ -30,7 +30,7 @@ export const sendotp = async (req, res) => {
                 res.status(200).json( {message: "otp sent to email"})
             }
         }
-            else {
+        else {
             res.status(500).send("error in sending email")
         }
     }
@@ -50,12 +50,12 @@ const mailsender = async (email, otp) => {
     });
     const mailOptions = {
         from: {
-            name: "rummitr",
+            name: "RuamMitr",
             address: process.env.EMAIL_USER
         },
         to: [email],
-        subject: 'Sending Email using Node.js',
-        text: `it OTP for your account is  ${otp}  , please change it after login.`
+        subject: 'OTP Request from RuamMitr',
+        text: `The OTP for your account is ${otp}, please change it after login.`
     };
     console.log("try to send email")
     try {
@@ -68,7 +68,7 @@ const mailsender = async (email, otp) => {
     }
 }
 
-function generateRandomOTP(length) {
+export function generateRandomOTP(length) {
     // Define allowed characters for the password
     const charset = "0123456789";
 
