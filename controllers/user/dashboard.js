@@ -27,6 +27,16 @@ export const userdashboardcontroller = async (req, res) => {
     }
 
     var {data, error} = await supabase
+        .from('dekhor_savepost')
+        .select('post:dekhor_post(id_post,title,category,image_link,save),fullname_blogger')
+        .eq("id_user", id)
+    if (error) {
+        errors.dekhor_savedpost = error;
+    } else {
+        infos.dekhor_savedpost = data;
+    }
+
+    var {data, error} = await supabase
         .from("bin_info")
         .select("*")
         .eq("user_update", id);
@@ -47,7 +57,7 @@ export const userdashboardcontroller = async (req, res) => {
     }
 
     if (Object.values(errors).some((error) => error !== null)) {
-        res.status(500).send(errors);
+        res.status(404).send(errors);
     } else {
         res.status(200).send(infos);
     }
