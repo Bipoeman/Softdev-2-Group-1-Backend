@@ -23,14 +23,12 @@ export const resetpassword = async (req, res) => {
         else {
             res.status(400).json({msg: "Invalid OTP"})
         }
-
-        const hashedotp = bcrypt.hashSync(generateRandomOTP(6), 8);
-        const {data, error} = await supabase.from("user_info").update({otp: hashedotp})
+        const {data, error} = await supabase.from("user_info").update({otp: null})
             .eq("id", datauser[0].id).select();
         if (error) {
             res.status(500).send(error)}
         else {
-            res.status(200).json( {message: "otp updated successfully"})
+            res.status(200).json( {message: "otp removed successfully"})
         }
     }
 }

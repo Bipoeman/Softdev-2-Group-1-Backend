@@ -12,6 +12,7 @@ import {resetpassword} from "../controllers/user/resetpassword.js";
 import {changeemail} from "../controllers/user/changeemail.js";
 import { updateavatar } from "../controllers/user/updateavatar.js";
 import {userdashboardcontroller} from "../controllers/user/dashboard.js";
+import {deleteuser} from "../controllers/user/deleteuser.js";
 
 
 const uploadprofile = multer();
@@ -35,7 +36,6 @@ router.get("/otp",sendotp)
 
 router.put("/reset",resetpassword)
 
-
 // insert and update avatar 
 router.put("/avatar",validaccesstoken,updateavatar)
 
@@ -43,5 +43,7 @@ router.put("/avatar",validaccesstoken,updateavatar)
 router.get("/dashboard",validaccesstoken,userdashboardcontroller)
 
 router.get("/refresh",refreshtoken)
+
+router.delete("/delete",deleteuser)
 
 export default router;

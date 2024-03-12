@@ -213,6 +213,15 @@ img.logo {
     margin: 5rem;
 }
 
+input {
+    padding: 0.5rem;
+    border: none;
+    width: 90%;
+    border-radius: 50rem;
+    background-color: var(--textInputContainer);
+    color: var(--textInput);
+}
+
 @media screen and (max-width: 768px) {
 
     .main_box {
