@@ -18,14 +18,14 @@ export const sendotp = async (req, res) => {
     } else {
         // logic reset password
         const otpGen = generateRandomOTP(6);
-        const timestampz = new Date().toISOString();
+        const timestampz = new Date();
         const response = await mailsender(datauser[0].email, otpGen, timestampz);
         if (response) {
             // sanding otp in email
             const hashedotp = bcrypt.hashSync(otpGen, 8);
             const {data, error} = await supabase
                 .from("user_info")
-                .update({otp: hashedotp, otp_created_at: timestampz})
+                .update({otp: hashedotp, otp_created_at: timestampz.toISOString()})
                 .eq("id", datauser[0].id)
                 .select();
             if (error) {
