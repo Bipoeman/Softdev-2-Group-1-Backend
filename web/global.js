@@ -57,6 +57,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     themeSwitcher.addEventListener('click', changeThemeMode)
     deleteAccountBtn.addEventListener('click', deleteAccount)
 });
-
-
-
