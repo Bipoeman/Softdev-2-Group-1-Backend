@@ -90,6 +90,10 @@ hr {
     z-index: -1;
 }
 
+.margin {
+    margin: 5rem;
+}
+
 .extended {
     width: 100%;
     display: flex;
@@ -206,10 +210,9 @@ hr {
     color: var(--onOddContainer);
 }
 
-
 img.logo {
-    width: 100px;
-    height: 100px;
+    width: 16rem;
+    height: 16rem;
     margin: 5rem;
 }
 
@@ -220,6 +223,7 @@ input {
     border-radius: 50rem;
     background-color: var(--textInputContainer);
     color: var(--textInput);
+    border: solid 1px var(--evenContainer);
 }
 
 @media screen and (max-width: 768px) {

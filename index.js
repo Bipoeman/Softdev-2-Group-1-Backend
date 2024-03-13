@@ -42,3 +42,5 @@ app.get(
 app.listen(port, () => {
     console.log(`Example app listening at ${process.env.BASE_URL || `http://localhost:${port}`}`);
 });
+
+export default app;

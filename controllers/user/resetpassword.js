@@ -1,6 +1,5 @@
 import supabase from "../database/database.js";
 import bcrypt from "bcryptjs";
-import {generateRandomOTP} from "../user/sendotp.js";
 
 export const resetpassword = async (req, res) => {
     const {email, otp, password} = req.body;
