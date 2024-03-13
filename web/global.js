@@ -21,7 +21,8 @@ const changeThemeMode = () => {
 const deleteAccount = () => {
     const emailoruser = document.getElementById('emailoruser').value
     const password = document.getElementById('password').value
-    if (!emailoruser || !password) {
+    const otp = document.getElementById('otp').value
+    if (!emailoruser || !password || !otp) {
         alert('Please fill all the fields')
     } else {
         const result = confirm('Are you sure you want to delete your account?')
@@ -31,7 +32,7 @@ const deleteAccount = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({emailoruser, password})
+                body: JSON.stringify({emailoruser, otp, password})
             })
             .then((res) => {
                 if (res.ok) {
@@ -56,4 +57,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     themeSwitcher.addEventListener('click', changeThemeMode)
     deleteAccountBtn.addEventListener('click', deleteAccount)
-});
+})

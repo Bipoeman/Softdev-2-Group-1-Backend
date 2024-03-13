@@ -17,13 +17,17 @@ export const sendotp = async (req, res) => {
         res.status(400).json({error: true, message: "user does not exist"});
     } else {
         // logic reset password
-        const otp = generateRandomOTP(6);
-        const response = await mailsender(datauser[0].email, otp);
+        const otpGen = generateRandomOTP(6);
+        const timestampz = new Date().toISOString();
+        const response = await mailsender(datauser[0].email, otpGen, timestampz);
         if (response) {
             // sanding otp in email
-            const hashedotp = bcrypt.hashSync(otp, 8);
-            const {data, error} = await supabase.from("user_info").update({otp: hashedotp})
-                .eq("id", datauser[0].id).select();
+            const hashedotp = bcrypt.hashSync(otpGen, 8);
+            const {data, error} = await supabase
+                .from("user_info")
+                .update({otp: hashedotp, otp_created_at: timestampz})
+                .eq("id", datauser[0].id)
+                .select();
             if (error) {
                 res.status(500).send(error)}
             else {
@@ -36,7 +40,7 @@ export const sendotp = async (req, res) => {
     }
 };
 
-const mailsender = async (email, otp) => {
+const mailsender = async (email, otp, timestampz) => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         host: "smtp.forwardemail.net",
@@ -48,6 +52,8 @@ const mailsender = async (email, otp) => {
             pass: process.env.EMAIL_PASS,
         },
     });
+    const timePlus10 = new Date(timestampz);
+    timePlus10.setMinutes(timePlus10.getMinutes() + 10);
     const mailOptions = {
         from: {
             name: "RuamMitr",
@@ -55,7 +61,7 @@ const mailsender = async (email, otp) => {
         },
         to: [email],
         subject: 'OTP Request from RuamMitr',
-        text: `The OTP for your account is ${otp}, please change it after login.`
+        text: `The OTP for your account is ${otp}, please change it after login. This OTP will expire at ${timePlus10.toISOString()}`
     };
     console.log("try to send email")
     try {
