@@ -9,7 +9,7 @@ export const registerController = async (req, res) => {
         if(data.length === 0){
             const hashedPassword = bcrypt.hashSync(password, 10);
             const {data, error} = await supabase
-                .from('user_info')
+                .from("user_info")
                 .insert([
                     { email, fullname, username, password:hashedPassword }
                 ]);

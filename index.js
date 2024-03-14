@@ -8,13 +8,18 @@ import dekhor from './routes/dekhor.js';
 import cors from 'cors';
 import user from "./routes/user.js";
 import issue from "./routes/issue.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+var __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 config();
 const app = express();
 app.use(cors());
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.static('web'));
 
 app.use("/login", login);
 app.use("/register", register);
@@ -24,13 +29,18 @@ app.use("/restroom",restroom);
 app.use("/dekhor",dekhor)
 app.use("/issue",issue)
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+app.get(
+    '/',
+    (req, res) => res.sendFile(__dirname + '/web/index.html'),
+)
 
-
-
+app.get(
+    '/delete_user',
+    (req, res) => res.sendFile(__dirname + '/web/delete_user/index.html'),
+)
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Example app listening at ${process.env.BASE_URL || `http://localhost:${port}`}`);
 });
+
+export default app;

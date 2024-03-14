@@ -8,7 +8,6 @@ router.get("", (req, res) => {
     res.send("register");
 })
 
-
 router.post("", registerController);
 
 export default router;

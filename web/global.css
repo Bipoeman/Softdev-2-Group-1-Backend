@@ -1,0 +1,243 @@
+body {
+    --main: #D62828;
+    --onMain: #FFFFFF;
+    --oddContainer: #EEEEEE;
+    --evenContainer: #FFFFFF;
+    --onOddContainer: #000000;
+    --onEvenContainer: #000000;
+    --textInputContainer: #DDDDDD;
+    --onTextInputContainer: #545454;
+    --textInput: #000000;
+    --icon1: var(--main);
+    --icon2: #000000;
+    --background: #F8C4C4;
+    --backgroundStart: #F8C4C4;
+    --backgroundEnd: #E5D1BB;
+    --hyperlink: #00A7BE;
+
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+body.light {
+    --main: #D62828;
+    --onMain: #FFFFFF;
+    --oddContainer: #EEEEEE;
+    --evenContainer: #FFFFFF;
+    --onOddContainer: #000000;
+    --onEvenContainer: #000000;
+    --textInputContainer: #DDDDDD;
+    --onTextInputContainer: #545454;
+    --textInput: #000000;
+    --icon1: var(--main);
+    --icon2: #000000;
+    --background: #F8C4C4;
+    --backgroundStart: #F8C4C4;
+    --backgroundEnd: #E5D1BB;
+    --hyperlink: #00A7BE;
+}
+
+body.dark {
+    --main: #D62828;
+    --onMain: #FFFFFF;
+    --oddContainer: #4D4D4D;
+    --evenContainer: #424242;
+    --onOddContainer: #FFFFFF;
+    --onEvenContainer: #FFFFFF;
+    --textInputContainer: #545454;
+    --onTextInputContainer: #DDDDDD;
+    --textInput: #FFFFFF;
+    --icon1: var(--main);
+    --icon2: #FFFFFF;
+    --background: #4c3434;
+    --backgroundStart: #4c3434;
+    --backgroundEnd: #5c473d;
+    --hyperlink: #00C8D4;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+hr {
+    border: solid 1px var(--onOddContainer);
+    opacity: 0.2;
+    width: 80%;
+    margin: 1rem 0;
+
+}
+
+.bg {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    background: linear-gradient(
+        180deg,
+        var(--backgroundStart),
+        var(--backgroundEnd)
+    );
+    z-index: -1;
+}
+
+.margin {
+    margin: 5rem;
+}
+
+.extended {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center > * {
+    margin: 0.5rem;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.main_box {
+    background-color: var(--main);
+    color: var(--onMain);
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    width: 42.5%;
+}
+
+.box {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    width: 75%;
+}
+
+.outer.box {
+    width: 30rem;
+}
+
+.odd {
+    --start: var(--oddContainer);
+    --end: rgba(var(--oddContainer), 0);
+
+    background: var(--start);
+    color: var(--onOddContainer);
+}
+
+.even {
+    --start: var(--evenContainer);
+    --end: var(--onEvenContainer);
+
+    background: var(--start);
+    color: var(--onEvenContainer);
+}
+
+.odd_gradient {
+    --start: var(--oddContainer);
+    --end: rgba(0, 0, 0, 0);
+
+    background: linear-gradient(
+        180deg,
+        var(--start),
+        var(--end)
+    );
+    color: var(--onOddContainer);
+}
+
+.even_gradient {
+    --start: var(--evenContainer);
+    --end: rgba(0, 0, 0, 0);
+
+    background: linear-gradient(
+        180deg,
+        var(--start),
+        var(--end)
+    );
+    color: var(--onEvenContainer);
+}
+
+.button {
+    background-color: var(--main);
+    color: var(--onMain);
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.button:hover {
+    background-color: var(--onMain);
+    color: var(--main);
+}
+
+.theme-switcher {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--oddContainer);
+    color: var(--onOddContainer);
+}
+
+img.logo {
+    width: 16rem;
+    height: 16rem;
+    margin: 5rem;
+}
+
+input {
+    padding: 0.5rem;
+    border: none;
+    width: 90%;
+    border-radius: 50rem;
+    background-color: var(--textInputContainer);
+    color: var(--textInput);
+    border: solid 1px var(--evenContainer);
+}
+
+@media screen and (max-width: 768px) {
+
+    .main_box {
+        width: 80%;
+    }
+
+    .box {
+        width: 80%;
+    }
+
+    .outer.box {
+        width: 80%;
+    }
+    
+}
