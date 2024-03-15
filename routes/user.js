@@ -13,6 +13,7 @@ import {changeemail} from "../controllers/user/changeemail.js";
 import { updateavatar } from "../controllers/user/updateavatar.js";
 import {userdashboardcontroller} from "../controllers/user/dashboard.js";
 import {deleteuser} from "../controllers/user/deleteuser.js";
+import {getUsernameFromID} from "../controllers/user/active.js";
 
 
 const uploadprofile = multer();
@@ -45,5 +46,7 @@ router.get("/dashboard",validaccesstoken,userdashboardcontroller)
 router.get("/refresh",refreshtoken)
 
 router.delete("/delete",deleteuser)
+
+router.get("/active",getUsernameFromID)
 
 export default router;

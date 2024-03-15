@@ -1,3 +1,8 @@
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
 body {
     --main: #D62828;
     --onMain: #FFFFFF;
@@ -18,7 +23,6 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    font-size: 16px;
     line-height: 1.5;
 }
 
@@ -219,7 +223,7 @@ img.logo {
 input {
     padding: 0.5rem;
     border: none;
-    width: 90%;
+    width: 17rem;
     border-radius: 50rem;
     background-color: var(--textInputContainer);
     color: var(--textInput);
@@ -227,6 +231,10 @@ input {
 }
 
 @media screen and (max-width: 768px) {
+
+    html {
+        font-size: 15px;
+    }
 
     .main_box {
         width: 80%;
@@ -238,6 +246,22 @@ input {
 
     .outer.box {
         width: 80%;
+    }
+    
+}
+
+@media screen and (max-width: 480px) {
+    
+    html {
+        font-size: 12px;
+    }
+
+}
+
+@media screen and (max-width: 300px) {
+
+    html {
+        font-size: 3vw;
     }
     
 }
