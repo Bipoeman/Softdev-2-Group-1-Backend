@@ -1,4 +1,4 @@
-let baseURL = 'http://localhost:3000' // edit this to your server URL
+let baseURL = window.location.origin
 let themeMode = localStorage.getItem('themeMode') ?? 'light'
 
 const startThemeMode = () => {
@@ -53,8 +53,11 @@ const deleteAccount = () => {
 document.addEventListener('DOMContentLoaded', async () => {
     startThemeMode()
     const themeSwitcher = document.querySelector('.theme-switcher')
-    const deleteAccountBtn = document.getElementById('deleteButton')
-
     themeSwitcher.addEventListener('click', changeThemeMode)
-    deleteAccountBtn.addEventListener('click', deleteAccount)
+
+    if (window.location.pathname === '/delete') {
+        const deleteAccountBtn = document.getElementById('deleteButton')
+        deleteAccountBtn.addEventListener('click', deleteAccount)
+    }
+    
 })
