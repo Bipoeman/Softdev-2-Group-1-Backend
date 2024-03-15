@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const themeSwitcher = document.querySelector('.theme-switcher')
     themeSwitcher.addEventListener('click', changeThemeMode)
 
-    if (window.location.pathname === '/delete_user') {
+    if (window.location.pathname === '/delete_user/') {
         const deleteAccountBtn = document.getElementById('deleteButton')
         deleteAccountBtn.addEventListener('click', deleteAccount)
     }
